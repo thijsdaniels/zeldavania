@@ -10,7 +10,7 @@ public partial class PlayerJumping : State
     private AudioStreamPlayer2D _soundEffect;
 
     [Export]
-    private float _velocity = 120;
+    private float _velocity = 180;
 
     [ExportGroup("Falling")]
     [Export]

@@ -1,16 +1,17 @@
 [gd_scene load_steps=5 format=3 uid="uid://cjwpr0apqprm4"]
 
 [ext_resource type="Script" path="res://scripts/MovingPlatform.cs" id="1_b2k77"]
-[ext_resource type="Texture2D" uid="uid://bk2g0mnstdmti" path="res://assets/textures/CavesOfGallet.png" id="2_lmaiq"]
+[ext_resource type="Texture2D" path="res://assets/textures/objects/platforms/Platform.png" id="2_plat"]
+[ext_resource type="Texture2D" uid="uid://tsstp4olmgd" path="res://assets/textures/objects/platforms/PlatformCog.png" id="3_cog"]
 
 [sub_resource type="Curve2D" id="Curve2D_jutyq"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 0, 0, 0, 0, 0)
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 0, 0, 0, 0, 0, 0)
 }
 point_count = 3
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bhvyd"]
-size = Vector2(16, 8)
+size = Vector2(24, 4)
 
 [node name="Path2D" type="Path2D"]
 curve = SubResource("Curve2D_jutyq")
@@ -33,14 +34,15 @@ collision_mask = 2
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/AnimatableBody2D"]
-position = Vector2(0, 4)
+position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_bhvyd")
 one_way_collision = true
 
+[node name="Cog" type="Sprite2D" parent="PathFollow2D/AnimatableBody2D"]
+position = Vector2(0, 4)
+texture = ExtResource("3_cog")
+
 [node name="Sprite2D" type="Sprite2D" parent="PathFollow2D/AnimatableBody2D"]
-position = Vector2(-9.53674e-07, 0)
-scale = Vector2(2, 1)
-texture = ExtResource("2_lmaiq")
-offset = Vector2(2.08165e-12, 4)
-region_enabled = true
-region_rect = Rect2(32, 16, 8, 8)
+position = Vector2(0, 2)
+texture = ExtResource("2_plat")
+

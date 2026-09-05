@@ -37,10 +37,6 @@ public partial class PlayerRunning : State
     [Export]
     private TileDetector2D _ladderDetector;
 
-    [ExportGroup("Crouching")]
-    [Export]
-    private State _crouchingState;
-
     public override void Enter()
     {
         _sprite.Play("Run");
@@ -68,10 +64,6 @@ public partial class PlayerRunning : State
                 when _ladderDetector.IsOverlapping
                     && Input.IsActionPressed(Controller.Up):
                 Transition(_climbingState);
-                break;
-
-            case true when Input.IsActionJustPressed(Controller.Down):
-                Transition(_crouchingState);
                 break;
 
             default:

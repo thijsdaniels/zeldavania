@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cxm67ae15llvy"
-path="res://.godot/imported/MinimalMetroidvaniaCharacters.png-e9f05df9cc98137b95a4f57417ba8589.ctex"
+uid="uid://r7j7bk416luf"
+path="res://.godot/imported/RockBackground.png-d4e839a6ade3b71e85eb26706b0c2232.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/MinimalMetroidvaniaCharacters.png"
-dest_files=["res://.godot/imported/MinimalMetroidvaniaCharacters.png-e9f05df9cc98137b95a4f57417ba8589.ctex"]
+source_file="res://assets/textures/terrains/RockBackground.png"
+dest_files=["res://.godot/imported/RockBackground.png-d4e839a6ade3b71e85eb26706b0c2232.ctex"]
 
 [params]
 
