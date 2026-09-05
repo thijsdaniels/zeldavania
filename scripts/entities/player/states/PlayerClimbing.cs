@@ -19,10 +19,13 @@ public partial class PlayerClimbing : State
     private Vector2 _climbAcceleration = new(300, 400);
 
     [Export]
-    private Vector2 _climbDeceleration = new(600, 800);
+    private float _leapVelocity = 40;
 
     [Export]
-    private float _leapVelocity = 40;
+    private float _centeringSpeed = 30f;
+
+    [Export]
+    private Vector2 _climbDeceleration = new(600, 800);
 
     [ExportGroup("Transitions")]
     [Export]
@@ -36,7 +39,7 @@ public partial class PlayerClimbing : State
 
     public override void Enter()
     {
-        _sprite.Play("Swim"); // @todo Change to "Climb".
+        _sprite.Play("Climb");
         _ladderDetector.OnTileExited += OnLadderExited;
     }
 
@@ -51,7 +54,7 @@ public partial class PlayerClimbing : State
         {
             _body.Velocity = new Vector2(
                 _body.Velocity.X,
-                Mathf.Min(_body.Velocity.X, -_leapVelocity)
+                -_leapVelocity
             );
         }
 
@@ -84,7 +87,14 @@ public partial class PlayerClimbing : State
     {
         Vector2 direction = Controller.GetDirection();
 
-        _body.MoveWithIneratia(
+        if (direction.X == 0 && direction.Y != 0)
+        {
+            float targetX = Mathf.Floor(_body.GlobalPosition.X / 16f) * 16f + 8f;
+            float newX = Mathf.MoveToward(_body.GlobalPosition.X, targetX, _centeringSpeed * (float)delta);
+            _body.GlobalPosition = new Vector2(newX, _body.GlobalPosition.Y);
+        }
+
+        _body.MoveWithInertia(
             direction: direction,
             acceleration: _climbAcceleration * (float)delta,
             deceleration: _climbDeceleration * (float)delta,

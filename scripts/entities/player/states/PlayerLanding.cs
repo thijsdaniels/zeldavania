@@ -17,10 +17,6 @@ public partial class PlayerLanding : State
     [Export]
     private State _runningState;
 
-    [ExportGroup("Crouching")]
-    [Export]
-    private State _crouchingState;
-
     public override void Enter()
     {
         _soundEffect.Play();
@@ -29,10 +25,6 @@ public partial class PlayerLanding : State
         {
             case true when _body.Velocity.X != 0:
                 Transition(_runningState);
-                break;
-
-            case true when Input.IsActionPressed(Controller.Down):
-                Transition(_crouchingState);
                 break;
 
             default:

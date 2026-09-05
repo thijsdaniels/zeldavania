@@ -37,7 +37,7 @@ public partial class PlayerHurt : State
     private float _upwardKnockbackRatio = 0.5f;
 
     [Export]
-    private float _gravity = 400f;
+    private float _gravity = 500f;
 
     [Export]
     private float _friction = 300f;
@@ -83,6 +83,7 @@ public partial class PlayerHurt : State
     public override void Enter()
     {
         _soundEffect?.Play();
+        _sprite?.Play("Hurt");
         _hitstunTimer = _hitstunDuration;
 
         StartInvulnerability();

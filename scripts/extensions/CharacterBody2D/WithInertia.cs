@@ -2,7 +2,7 @@ using Godot;
 
 public static class WithInertia
 {
-    public static void MoveWithIneratia(
+    public static void MoveWithInertia(
         this CharacterBody2D body,
         Vector2 direction,
         Vector2 acceleration,
@@ -24,7 +24,7 @@ public static class WithInertia
         float limit
     )
     {
-        MoveWithIneratia(
+        MoveWithInertia(
             body: body,
             direction: direction,
             acceleration: new Vector2(acceleration, acceleration),
@@ -41,7 +41,7 @@ public static class WithInertia
         float limit
     )
     {
-        MoveWithIneratia(
+        MoveWithInertia(
             body: body,
             direction: new Vector2(direction, 0),
             acceleration: new Vector2(acceleration, 0),

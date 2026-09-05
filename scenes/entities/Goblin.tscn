@@ -1,16 +1,16 @@
-[gd_scene load_steps=42 format=3 uid="uid://c0uq66yeqxa7m"]
+[gd_scene format=3 uid="uid://c0uq66yeqxa7m"]
 
 [ext_resource type="Texture2D" uid="uid://gjc6a1tnf3ka" path="res://assets/textures/entities/Goblin.png" id="1_kglvi"]
-[ext_resource type="Script" path="res://scripts/entities/enemy/Enemy.cs" id="1_u3cnu"]
-[ext_resource type="Script" path="res://scripts/utilities/FiniteStateMachine.cs" id="2_lgaot"]
-[ext_resource type="Script" path="res://scripts/entities/enemy/states/EnemySleeping.cs" id="3_ahbhy"]
+[ext_resource type="Script" uid="uid://jroueoth8mtn" path="res://scripts/entities/enemy/Enemy.cs" id="1_u3cnu"]
+[ext_resource type="Script" uid="uid://b478pmi0mcql2" path="res://scripts/utilities/FiniteStateMachine.cs" id="2_lgaot"]
+[ext_resource type="Script" uid="uid://2bwd55y5ykhj" path="res://scripts/entities/enemy/states/EnemySleeping.cs" id="3_ahbhy"]
 [ext_resource type="PackedScene" uid="uid://bqfrngjwqnade" path="res://scenes/utilities/WaterDetector2D.tscn" id="3_sudc5"]
-[ext_resource type="Script" path="res://scripts/entities/enemy/states/EnemyStanding.cs" id="4_5411y"]
-[ext_resource type="Script" path="res://scripts/entities/enemy/states/EnemyChasing.cs" id="6_asnuo"]
-[ext_resource type="Script" path="res://scripts/entities/enemy/states/EnemyFalling.cs" id="7_q7ong"]
-[ext_resource type="Script" path="res://scripts/entities/enemy/states/EnemyAttacking.cs" id="8_atk01"]
-[ext_resource type="Script" path="res://scripts/entities/enemy/states/EnemyDying.cs" id="9_f6xk4"]
-[ext_resource type="Script" path="res://scripts/combat/Hitbox.cs" id="10_hit01"]
+[ext_resource type="Script" uid="uid://bpmpl2aggdxfc" path="res://scripts/entities/enemy/states/EnemyStanding.cs" id="4_5411y"]
+[ext_resource type="Script" uid="uid://clmi7ivlt1mrd" path="res://scripts/entities/enemy/states/EnemyChasing.cs" id="6_asnuo"]
+[ext_resource type="Script" uid="uid://duonpgo4pxb7v" path="res://scripts/entities/enemy/states/EnemyFalling.cs" id="7_q7ong"]
+[ext_resource type="Script" uid="uid://dxnui6gan5ct8" path="res://scripts/entities/enemy/states/EnemyAttacking.cs" id="8_atk01"]
+[ext_resource type="Script" uid="uid://dirh2tve8s8mu" path="res://scripts/entities/enemy/states/EnemyDying.cs" id="9_f6xk4"]
+[ext_resource type="Script" uid="uid://dox7ulgtgmsqx" path="res://scripts/combat/Hitbox.cs" id="10_hit01"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3mfx6"]
 atlas = ExtResource("1_kglvi")
@@ -92,14 +92,6 @@ region = Rect2(168, 48, 24, 24)
 atlas = ExtResource("1_kglvi")
 region = Rect2(192, 48, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xohgx"]
-atlas = ExtResource("1_kglvi")
-region = Rect2(24, 23, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fylpe"]
-atlas = ExtResource("1_kglvi")
-region = Rect2(48, 23, 24, 24)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_k7vmr"]
 atlas = ExtResource("1_kglvi")
 region = Rect2(72, 23, 24, 24)
@@ -107,6 +99,14 @@ region = Rect2(72, 23, 24, 24)
 [sub_resource type="AtlasTexture" id="AtlasTexture_alp7m"]
 atlas = ExtResource("1_kglvi")
 region = Rect2(96, 23, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xohgx"]
+atlas = ExtResource("1_kglvi")
+region = Rect2(24, 23, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fylpe"]
+atlas = ExtResource("1_kglvi")
+region = Rect2(48, 23, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hk4s4"]
 atlas = ExtResource("1_kglvi")
@@ -139,7 +139,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_s2md1")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Dying",
 "speed": 5.0
 }, {
@@ -168,7 +168,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_m5pbt")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Running",
 "speed": 5.0
 }, {
@@ -197,7 +197,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vwmbj")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Sleeping",
 "speed": 5.0
 }, {
@@ -214,7 +214,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fylpe")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Stabbing",
 "speed": 5.0
 }, {
@@ -231,7 +231,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_n8yuv")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Standing",
 "speed": 5.0
 }]
@@ -239,16 +239,16 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_klq03"]
 size = Vector2(8, 7)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_spear_tip"]
+size = Vector2(10, 4)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_77wu3"]
 radius = 64.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x301s"]
 size = Vector2(8, 7)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_spear_tip"]
-size = Vector2(10, 4)
-
-[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("HearingArea", "VisionArea", "WaterDetector")]
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1043098153 node_paths=PackedStringArray("HearingArea", "VisionArea", "WaterDetector")]
 collision_layer = 512
 collision_mask = 3
 script = ExtResource("1_u3cnu")
@@ -256,29 +256,31 @@ HearingArea = NodePath("HearingArea")
 VisionArea = NodePath("VisionArea")
 WaterDetector = NodePath("WaterDetector2D")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1239738460]
 position = Vector2(0, -6)
 sprite_frames = SubResource("SpriteFrames_kwgay")
 animation = &"Standing"
 autoplay = "Sleeping"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2125007236]
+visible = false
 position = Vector2(1, -3.5)
 shape = SubResource("RectangleShape2D_klq03")
 
-[node name="ContactHitbox" type="Area2D" parent="."]
+[node name="ContactHitbox" type="Area2D" parent="." unique_id=1633601581]
+visible = false
 collision_layer = 32
 collision_mask = 16
 script = ExtResource("10_hit01")
-Damage = 1
 Force = 80.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactHitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactHitbox" unique_id=912866958]
 position = Vector2(1, -3.5)
 shape = SubResource("RectangleShape2D_klq03")
 debug_color = Color(0.85, 0.5, 0.15, 0.3)
 
-[node name="AttackHitbox" type="Area2D" parent="."]
+[node name="AttackHitbox" type="Area2D" parent="." unique_id=2087907273]
+visible = false
 position = Vector2(7, -2.5)
 collision_layer = 32
 collision_mask = 16
@@ -288,42 +290,45 @@ script = ExtResource("10_hit01")
 Damage = 2
 Force = 100.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox" unique_id=1408648066]
 shape = SubResource("RectangleShape2D_spear_tip")
 debug_color = Color(0.85, 0.15, 0.15, 0.42)
 
-[node name="HearingArea" type="Area2D" parent="."]
+[node name="HearingArea" type="Area2D" parent="." unique_id=1294164390]
+visible = false
 collision_layer = 0
 collision_mask = 256
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HearingArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HearingArea" unique_id=1249073550]
 position = Vector2(0, -4)
 shape = SubResource("CircleShape2D_77wu3")
 
-[node name="VisionArea" type="Area2D" parent="."]
+[node name="VisionArea" type="Area2D" parent="." unique_id=23395236]
+visible = false
 collision_layer = 0
 collision_mask = 256
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VisionArea"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VisionArea" unique_id=1027579307]
 polygon = PackedVector2Array(2.08165e-12, 4, 96, 16, 96, -32, 2.08165e-12, -16, -96, -32, -96, 16)
 
-[node name="WaterDetector2D" parent="." instance=ExtResource("3_sudc5")]
+[node name="WaterDetector2D" parent="." unique_id=178751895 instance=ExtResource("3_sudc5")]
+visible = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WaterDetector2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WaterDetector2D" unique_id=295840875]
 position = Vector2(1, -3.5)
 shape = SubResource("RectangleShape2D_x301s")
 
-[node name="State" type="Node" parent="." node_paths=PackedStringArray("_state")]
+[node name="State" type="Node" parent="." unique_id=1175957554 node_paths=PackedStringArray("_state")]
 script = ExtResource("2_lgaot")
 _state = NodePath("Sleeping")
 
-[node name="Sleeping" type="Node" parent="State" node_paths=PackedStringArray("_enemy", "_sprite", "_onWake")]
+[node name="Sleeping" type="Node" parent="State" unique_id=1599854353 node_paths=PackedStringArray("_enemy", "_sprite", "_onWake")]
 script = ExtResource("3_ahbhy")
 _enemy = NodePath("../..")
 _sprite = NodePath("../../AnimatedSprite2D")
 _onWake = NodePath("../Standing")
 
-[node name="Standing" type="Node" parent="State" node_paths=PackedStringArray("_enemy", "_sprite", "_onTargetSpotted", "_sleepTimer", "_onSleep")]
+[node name="Standing" type="Node" parent="State" unique_id=686390199 node_paths=PackedStringArray("_enemy", "_sprite", "_onTargetSpotted", "_sleepTimer", "_onSleep")]
 script = ExtResource("4_5411y")
 _enemy = NodePath("../..")
 _sprite = NodePath("../../AnimatedSprite2D")
@@ -331,7 +336,7 @@ _onTargetSpotted = NodePath("../Chasing")
 _sleepTimer = NodePath("../../SleepTimer")
 _onSleep = NodePath("../Sleeping")
 
-[node name="Chasing" type="Node" parent="State" node_paths=PackedStringArray("_enemy", "_sprite", "_onFall", "_onTargetLost", "_onTargetReached")]
+[node name="Chasing" type="Node" parent="State" unique_id=1488130994 node_paths=PackedStringArray("_enemy", "_sprite", "_onFall", "_onTargetLost", "_onTargetReached")]
 script = ExtResource("6_asnuo")
 _enemy = NodePath("../..")
 _sprite = NodePath("../../AnimatedSprite2D")
@@ -339,7 +344,7 @@ _onFall = NodePath("../Falling")
 _onTargetLost = NodePath("../Standing")
 _onTargetReached = NodePath("../Attacking")
 
-[node name="Attacking" type="Node" parent="State" node_paths=PackedStringArray("_enemy", "_sprite", "_hitbox", "_onComplete", "_onFall")]
+[node name="Attacking" type="Node" parent="State" unique_id=117543810 node_paths=PackedStringArray("_enemy", "_sprite", "_hitbox", "_onComplete", "_onFall")]
 script = ExtResource("8_atk01")
 _enemy = NodePath("../..")
 _sprite = NodePath("../../AnimatedSprite2D")
@@ -347,17 +352,17 @@ _hitbox = NodePath("../../AttackHitbox")
 _onComplete = NodePath("../Standing")
 _onFall = NodePath("../Falling")
 
-[node name="Falling" type="Node" parent="State" node_paths=PackedStringArray("_enemy", "_sprite", "_onLand", "_onPlunge")]
+[node name="Falling" type="Node" parent="State" unique_id=67968763 node_paths=PackedStringArray("_enemy", "_sprite", "_onLand", "_onPlunge")]
 script = ExtResource("7_q7ong")
 _enemy = NodePath("../..")
 _sprite = NodePath("../../AnimatedSprite2D")
 _onLand = NodePath("../Standing")
 _onPlunge = NodePath("../Dying")
 
-[node name="Dying" type="Node" parent="State" node_paths=PackedStringArray("_enemy", "_sprite")]
+[node name="Dying" type="Node" parent="State" unique_id=2023986213 node_paths=PackedStringArray("_enemy", "_sprite")]
 script = ExtResource("9_f6xk4")
 _enemy = NodePath("../..")
 _sprite = NodePath("../../AnimatedSprite2D")
 
-[node name="SleepTimer" type="Timer" parent="."]
+[node name="SleepTimer" type="Timer" parent="." unique_id=1668611141]
 wait_time = 10.0

@@ -27,10 +27,6 @@ public partial class PlayerStanding : State
     [Export]
     private State _jumpingState;
 
-    [ExportGroup("Crouching")]
-    [Export]
-    private State _crouchingState;
-
     public override void Enter()
     {
         _sprite.Play("Idle");
@@ -62,10 +58,6 @@ public partial class PlayerStanding : State
                 when _ladderDetector.IsOverlapping
                     && Input.IsActionPressed(Controller.Up):
                 Transition(_climbingState);
-                break;
-
-            case true when Input.IsActionJustPressed(Controller.Down):
-                Transition(_crouchingState);
                 break;
 
             // case true when Input.IsActionJustPressed(Controller.X):

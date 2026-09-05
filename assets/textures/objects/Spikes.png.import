@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bk2g0mnstdmti"
-path="res://.godot/imported/CavesOfGallet.png-b0c13992cee99c981a9a59ad1f01a714.ctex"
+uid="uid://dwjpoannpds2l"
+path="res://.godot/imported/Spikes.png-54e5c2c98f3a721be85b3bcecc3fb23c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/CavesOfGallet.png"
-dest_files=["res://.godot/imported/CavesOfGallet.png-b0c13992cee99c981a9a59ad1f01a714.ctex"]
+source_file="res://assets/textures/objects/Spikes.png"
+dest_files=["res://.godot/imported/Spikes.png-54e5c2c98f3a721be85b3bcecc3fb23c.ctex"]
 
 [params]
 

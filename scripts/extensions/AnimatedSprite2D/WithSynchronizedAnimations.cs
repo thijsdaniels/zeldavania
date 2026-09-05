@@ -18,6 +18,6 @@ public static class WithSynchronizedAnimations
         sprite.SpeedScale = direction.Length();
 
         if (direction.X != 0)
-            sprite.FlipH = direction.X < 0;
+            sprite.FlipH = direction.X > 0;
     }
 }

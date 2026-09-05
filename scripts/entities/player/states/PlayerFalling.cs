@@ -10,10 +10,10 @@ public partial class PlayerFalling : State
 
     [ExportGroup("Gravity")]
     [Export]
-    private float _gravity = 400;
+    private float _gravity = 500;
 
     [Export]
-    private float _terminalVelocity = 150;
+    private float _terminalVelocity = 220;
 
     [ExportGroup("Movement")]
     [Export]
@@ -59,7 +59,7 @@ public partial class PlayerFalling : State
 
     public override void Enter()
     {
-        _sprite.Play("Fall");
+        UpdateAnimation();
     }
 
     public override void UpdatePhysics(double delta)
@@ -94,8 +94,17 @@ public partial class PlayerFalling : State
             default:
                 Fall(delta);
                 Move(delta);
+                UpdateAnimation();
                 break;
         }
+    }
+
+    private void UpdateAnimation()
+    {
+        if (_body.Velocity.Y < 0)
+            _sprite.Play("Jump");
+        else
+            _sprite.Play("Fall");
     }
 
     private void Fall(double delta)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://x6o0oeqia3w3"
-path="res://.godot/imported/Grass.png-5b0f9048b35297f2c001da2fbfbdb704.ctex"
+uid="uid://cgbwk6ndqg2he"
+path="res://.godot/imported/Bridge.png-e017f6d85648d54112ce0d5a1d51b541.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/terrains/Grass.png"
-dest_files=["res://.godot/imported/Grass.png-5b0f9048b35297f2c001da2fbfbdb704.ctex"]
+source_file="res://assets/textures/objects/platforms/Bridge.png"
+dest_files=["res://.godot/imported/Bridge.png-e017f6d85648d54112ce0d5a1d51b541.ctex"]
 
 [params]
 
