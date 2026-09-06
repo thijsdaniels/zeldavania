@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://bpmpl2aggdxfc" path="res://scripts/entities/enemy/states/EnemyStanding.cs" id="4_5411y"]
 [ext_resource type="Script" uid="uid://clmi7ivlt1mrd" path="res://scripts/entities/enemy/states/EnemyChasing.cs" id="6_asnuo"]
 [ext_resource type="Script" uid="uid://duonpgo4pxb7v" path="res://scripts/entities/enemy/states/EnemyFalling.cs" id="7_q7ong"]
-[ext_resource type="Script" uid="uid://dxnui6gan5ct8" path="res://scripts/entities/enemy/states/EnemyAttacking.cs" id="8_atk01"]
+[ext_resource type="Script" path="res://scripts/entities/enemy/states/GoblinStabbing.cs" id="8_atk01"]
 [ext_resource type="Script" uid="uid://dirh2tve8s8mu" path="res://scripts/entities/enemy/states/EnemyDying.cs" id="9_f6xk4"]
 [ext_resource type="Script" uid="uid://dox7ulgtgmsqx" path="res://scripts/combat/Hitbox.cs" id="10_hit01"]
 [ext_resource type="Script" uid="uid://c2v12b43diu82" path="res://scripts/combat/Damageable.cs" id="11_dmg01"]

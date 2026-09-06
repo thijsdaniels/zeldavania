@@ -1,7 +1,7 @@
 using Godot;
 using Zeldavania.Combat;
 
-public partial class EnemyAttacking : State
+public partial class GoblinStabbing : State
 {
     [Export]
     public Enemy _enemy;
