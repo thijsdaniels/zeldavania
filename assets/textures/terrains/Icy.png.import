@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dayp2smx6tb86"
-path="res://.godot/imported/DirtGrassy.png-820c560f74f33bb5af7fde8eecabb80a.ctex"
+uid="uid://ckylivonyo0al"
+path="res://.godot/imported/Icy.png-8eba8eab41320b88a4d1ee821de47e76.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/terrains/DirtGrassy.png"
-dest_files=["res://.godot/imported/DirtGrassy.png-820c560f74f33bb5af7fde8eecabb80a.ctex"]
+source_file="res://assets/textures/terrains/Icy.png"
+dest_files=["res://.godot/imported/Icy.png-8eba8eab41320b88a4d1ee821de47e76.ctex"]
 
 [params]
 

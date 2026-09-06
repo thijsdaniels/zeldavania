@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0vr4x2abkapa"
-path="res://.godot/imported/RockGrassy.png-cafea164697a46c093ced5d34864f2b5.ctex"
+uid="uid://bhu6ihr22vgu3"
+path="res://.godot/imported/Grassy.png-dbd6d3a974bbbe4e6ca44983d1e91f26.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/terrains/RockGrassy.png"
-dest_files=["res://.godot/imported/RockGrassy.png-cafea164697a46c093ced5d34864f2b5.ctex"]
+source_file="res://assets/textures/terrains/Grassy.png"
+dest_files=["res://.godot/imported/Grassy.png-dbd6d3a974bbbe4e6ca44983d1e91f26.ctex"]
 
 [params]
 
