@@ -54,6 +54,10 @@ public partial class PlayerFalling : State
     [Export]
     private State _attackingState;
 
+    [ExportGroup("Aiming")]
+    [Export]
+    private State _aimingState;
+
     private int _airJumpsRemaining;
     private float _dropGraceTimer;
 
@@ -92,6 +96,10 @@ public partial class PlayerFalling : State
         {
             case true when Input.IsActionJustPressed(Controller.X):
                 Transition(_attackingState);
+                break;
+
+            case true when Input.IsActionJustPressed(Controller.B):
+                Transition(_aimingState);
                 break;
 
             case true

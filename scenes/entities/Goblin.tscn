@@ -265,8 +265,8 @@ StateMachine = NodePath("State")
 
 [node name="Damageable" type="Node" parent="." unique_id=1847192847]
 script = ExtResource("11_dmg01")
-MaxHitPoints = 2
-CurrentHitPoints = 2
+MaxHitPoints = 3
+CurrentHitPoints = 3
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1284918234 node_paths=PackedStringArray("_damageable")]
 visible = false

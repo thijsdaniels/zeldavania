@@ -15,10 +15,10 @@ public partial class Damageable : Node
     public delegate void OnDepletedEventHandler();
 
     [Export]
-    public int MaxHitPoints { get; set; } = 6;
+    public int MaxHitPoints { get; set; } = 1;
 
     [Export]
-    public int CurrentHitPoints { get; set; } = 6;
+    public int CurrentHitPoints { get; set; } = 1;
 
     public bool IsDepleted => CurrentHitPoints <= 0;
 

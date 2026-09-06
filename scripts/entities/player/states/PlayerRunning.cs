@@ -34,6 +34,10 @@ public partial class PlayerRunning : State
     [Export]
     private State _attackingState;
 
+    [ExportGroup("Aiming")]
+    [Export]
+    private State _aimingState;
+
     [ExportGroup("Climbing")]
     [Export]
     private State _climbingState;
@@ -58,6 +62,10 @@ public partial class PlayerRunning : State
 
             case true when Input.IsActionJustPressed(Controller.X):
                 Transition(_attackingState);
+                break;
+
+            case true when Input.IsActionJustPressed(Controller.B):
+                Transition(_aimingState);
                 break;
 
             case true when direction == 0 && _body.Velocity.X == 0:

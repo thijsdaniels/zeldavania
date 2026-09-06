@@ -31,6 +31,10 @@ public partial class PlayerStanding : State
     [Export]
     private State _attackingState;
 
+    [ExportGroup("Aiming")]
+    [Export]
+    private State _aimingState;
+
     public override void Enter()
     {
         _sprite.Play("Idle");
@@ -46,6 +50,10 @@ public partial class PlayerStanding : State
 
             case true when Input.IsActionJustPressed(Controller.X):
                 Transition(_attackingState);
+                break;
+
+            case true when Input.IsActionJustPressed(Controller.B):
+                Transition(_aimingState);
                 break;
 
             case true when Controller.GetHorizontalDirection() != 0:
