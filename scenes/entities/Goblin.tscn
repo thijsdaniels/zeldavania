@@ -383,10 +383,13 @@ _sprite = NodePath("../../AnimatedSprite2D")
 _onLand = NodePath("../Standing")
 _onPlunge = NodePath("../Dying")
 
-[node name="Dying" type="Node" parent="State" unique_id=2023986213 node_paths=PackedStringArray("_enemy", "_sprite")]
+[node name="Dying" type="Node" parent="State" unique_id=2023986213 node_paths=PackedStringArray("_enemy", "_sprite", "_hurtbox", "_contactHitbox")]
 script = ExtResource("9_f6xk4")
 _enemy = NodePath("../..")
 _sprite = NodePath("../../AnimatedSprite2D")
+_hurtbox = NodePath("../../Hurtbox")
+_contactHitbox = NodePath("../../ContactHitbox")
+
 
 [node name="Hurt" type="Node" parent="State" unique_id=1948271049 node_paths=PackedStringArray("_enemy", "_hurtbox", "_damageable", "_sprite", "_soundEffect", "_chasingState", "_standingState", "_dyingState")]
 script = ExtResource("13_hurt_state")

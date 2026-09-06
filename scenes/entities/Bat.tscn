@@ -183,9 +183,11 @@ _standingState = NodePath("../Returning")
 _dyingState = NodePath("../Dying")
 _gravity = 200.0
 
-[node name="Dying" type="Node" parent="State" unique_id=788982838 node_paths=PackedStringArray("_enemy", "_sprite")]
+[node name="Dying" type="Node" parent="State" unique_id=788982838 node_paths=PackedStringArray("_enemy", "_sprite", "_hurtbox", "_contactHitbox")]
 script = ExtResource("12_dying_cs")
 _enemy = NodePath("../..")
 _sprite = NodePath("../../AnimatedSprite2D")
-_animation = "Hurt"
+_hurtbox = NodePath("../../Hurtbox")
+_contactHitbox = NodePath("../../ContactHitbox")
 _gravity = 400.0
+

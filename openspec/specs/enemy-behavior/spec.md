@@ -22,14 +22,17 @@ The `Enemy` coordinator SHALL detect the player through hearing and vision trigg
 - **THEN** the enemy sets `Target = null`
 - **AND** emits the `OnTargetLost` signal.
 
-### Requirement: Enemy State Machine Behaviors
-Enemies SHALL transition between modular states depending on sensory signals and environment.
+### Requirement: Enemy Resting and Awakening
+The enemy finite state machine SHALL support resting/sleeping behavior and awakening upon sensory alert.
 
 #### Scenario: Sleeping and waking
 - **GIVEN** an enemy in `EnemySleeping` state with vision monitoring disabled
 - **WHEN** the `OnAlerted` signal is received
 - **THEN** the enemy transitions to its configured wake state (`_onWake`)
 - **AND** re-enables vision monitoring on state exit.
+
+### Requirement: Enemy Target Navigation
+The enemy finite state machine SHALL navigate and accelerate toward tracked targets.
 
 #### Scenario: Target chasing & navigation
 - **GIVEN** an enemy in `EnemyChasing` state with a valid `Target`
@@ -40,15 +43,13 @@ Enemies SHALL transition between modular states depending on sensory signals and
 - **WHEN** the target is lost (`Target == null`)
 - **THEN** the enemy transitions to `_onTargetLost`.
 
+### Requirement: Enemy Airborne Gravity
+The enemy finite state machine SHALL apply gravity whenever an enemy becomes airborne.
+
 #### Scenario: Airborne enemy falling
 - **GIVEN** an enemy in any grounded state
 - **WHEN** `IsOnFloor() == false`
 - **THEN** the enemy transitions to `EnemyFalling` and applies gravity until grounded.
-
-#### Scenario: Defeat and cleanup
-- **GIVEN** an enemy taking fatal damage
-- **WHEN** transitioning to `EnemyDying`
-- **THEN** the enemy plays its death animation and queues removal from the scene tree.
 
 ### Requirement: Enemy Damage Reaction & Hitstun
 The system SHALL transition an enemy to `EnemyHurt` upon receiving a valid hit, applying knockback momentum, visual flash, hitstun, and temporary hurtbox invulnerability.
@@ -66,7 +67,19 @@ The system SHALL transition an enemy to `EnemyHurt` upon receiving a valid hit, 
 - **THEN** `Hurtbox` invulnerability is cleared
 - **AND** the enemy transitions to `EnemyChasing` if a target is tracked, or `EnemyStanding` otherwise.
 
-#### Scenario: Defeat momentum preservation
-- **GIVEN** an enemy takes lethal damage depleting its hit points
+### Requirement: Enemy Defeat & Cleanup
+The enemy finite state machine SHALL handle entity defeat upon taking lethal damage, deactivating combat collisions and spawning death effects.
+
+#### Scenario: Defeat with death animation
+- **GIVEN** an enemy taking fatal damage that has a configured death animation
 - **WHEN** transitioning to `EnemyDying`
-- **THEN** the enemy preserves its knockback velocity and applies gravity while playing the death animation.
+- **THEN** the enemy's hurtbox and contact hitbox are immediately disabled
+- **AND** the enemy plays its death animation with movement friction and gravity
+- **AND** when the animation finishes, spawns the universal death effect (smoke puff and explosion sound) and queues removal from the scene tree.
+
+#### Scenario: Defeat without death animation
+- **GIVEN** an enemy taking fatal damage that lacks a death animation (or has it unconfigured/empty)
+- **WHEN** transitioning to `EnemyDying`
+- **THEN** the enemy's hurtbox and contact hitbox are immediately disabled
+- **AND** the enemy immediately spawns the universal death effect (smoke puff and explosion sound) and queues removal from the scene tree with zero delay.
+

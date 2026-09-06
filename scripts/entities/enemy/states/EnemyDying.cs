@@ -1,13 +1,25 @@
 using Godot;
+using Zeldavania.Combat;
 
 public partial class EnemyDying : State
 {
+    [ExportGroup("Dependencies")]
     [Export]
     public Enemy _enemy;
 
     [Export]
     public AnimatedSprite2D _sprite;
 
+    [Export]
+    public Hurtbox _hurtbox;
+
+    [Export]
+    public Area2D _contactHitbox;
+
+    [Export]
+    public PackedScene _deathEffectScene = GD.Load<PackedScene>("res://scenes/objects/EnemyDeathEffect.tscn");
+
+    [ExportGroup("Tuning")]
     [Export]
     public string _animation = "Dying";
 
@@ -19,13 +31,33 @@ public partial class EnemyDying : State
 
     public override void Enter()
     {
-        if (_sprite != null)
+        if (_hurtbox != null)
+        {
+            _hurtbox.IsInvulnerable = true;
+            _hurtbox.SetDeferred(Area2D.PropertyName.Monitoring, false);
+            _hurtbox.SetDeferred(Area2D.PropertyName.Monitorable, false);
+        }
+
+        if (_contactHitbox != null)
+        {
+            _contactHitbox.SetDeferred(Area2D.PropertyName.Monitoring, false);
+            _contactHitbox.SetDeferred(Area2D.PropertyName.Monitorable, false);
+        }
+
+        bool hasDyingAnim = _sprite != null
+            && _sprite.SpriteFrames != null
+            && !string.IsNullOrEmpty(_animation)
+            && _sprite.SpriteFrames.HasAnimation(_animation);
+
+        if (hasDyingAnim)
         {
             _sprite.AnimationFinished += OnAnimationFinished;
-            if (_animation != null)
-            {
-                _sprite.Play(_animation);
-            }
+            _sprite.Play(_animation);
+        }
+        else
+        {
+            SpawnDeathEffect();
+            _enemy?.QueueFree();
         }
     }
 
@@ -47,6 +79,17 @@ public partial class EnemyDying : State
             _sprite.AnimationFinished -= OnAnimationFinished;
         }
 
+        SpawnDeathEffect();
         _enemy?.QueueFree();
+    }
+
+    private void SpawnDeathEffect()
+    {
+        if (_deathEffectScene != null && _enemy != null)
+        {
+            var effect = _deathEffectScene.Instantiate<Node2D>();
+            effect.GlobalPosition = _enemy.GlobalPosition;
+            _enemy.GetParent()?.AddChild(effect);
+        }
     }
 }
