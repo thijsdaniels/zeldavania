@@ -31,65 +31,25 @@ The game structures all environmental tiles into four dedicated **Terrain Sets**
 
 ### 1D Horizontal Surfaces (`Match Sides`)
 Standard 3-tile topper spritesheets ($48 \times 16$):
-* `0:0`: **Left Endcap** — Peering bit on `Right Side` only.
-* `1:0`: **Looping Middle** — Peering bits on `Left Side` and `Right Side`.
-* `2:0`: **Right Endcap** — Peering bit on `Left Side` only.
+* `0:0`: **Left Endcap** — `→` (`right_side`)
+* `1:0`: **Looping Middle** — `←→` (`left_side`, `right_side`)
+* `2:0`: **Right Endcap** — `←` (`left_side`)
 
 ### 1D Vertical Climbables (`Match Sides`)
 Standard 3-tile vertical climbing spritesheets ($16 \times 48$):
-* `0:0`: **Top Endcap / Exit** — Peering bit on `Bottom Side` only.
-* `0:1`: **Repeating Shaft / Rungs** — Peering bits on `Top Side` and `Bottom Side`.
-* `0:2`: **Bottom Endcap** — Peering bit on `Top Side` only.
+* `0:0`: **Top Endcap / Exit** — `↓` (`bottom_side`)
+* `0:1`: **Repeating Shaft / Rungs** — `↑↓` (`top_side`, `bottom_side`)
+* `0:2`: **Bottom Endcap** — `↑` (`top_side`)
 
-### 2D Solid Ground (34-Tile `Match Corners and Sides`)
-Every 2D solid terrain spritesheet contains 34 sprites for specific neighbor combinations:
+### 2D Solid Ground: Standard 34-Tile Layout (`Match Corners and Sides`)
+Every 2D solid terrain sheet uses the standard $7 \times 7$ grid layout. Each cell at row $Y$ and column $X$ (atlas coordinate `X:Y`) connects to neighboring tiles in the indicated arrow directions (`↖ ↑ ↗ ← → ↙ ↓ ↘`):
 
-| Coordinate | Adjacent Tiles |
-| :--- | :--- |
-| 0,0 | |
-| 0,1 | R |
-| 0,2 | L R |
-| 0,3 | L |
-| 0,4 | L TL T TR R BR B BL |
-| 0,5 | L R BR B BL |
-| 0,6 | L TL T TR R |
-| 1,0 | R BR B |
-| 1,1 | L B BL |
-| 1,2 | B |
-| 1,3 | L TL T TR R B BL |
-| 1,4 | L TL T TR R B |
-| 1,5 | L TL T TR R BR B |
-| 1,6 | T R B |
-| 2,0 | |
-| 2,1 | |
-| 2,2 | T B |
-| 2,3 | L TL T  R B BL |
-| 2,4 | L T R B |
-| 2,5 | L T TR R BR B |
-| 2,6 | L T B |
-| 3,0 | |
-| 3,1 | |
-| 3,2 | T |
-| 3,3 | L TL T R BR B BL |
-| 3,4 | L T R BR B BL |
-| 3,5 | L T TR R BR B BL |
-| 3,6 | L R B |
-| 4,0 | |
-| 4,1 | |
-| 4,2 | |
-| 4,3 | |
-| 4,4 | |
-| 4,5 | |
-| 4,6 | L T R |
-| 5,0 | |
-| 5,1 | |
-| 5,2 | |
-| 5,3 | |
-| 5,4 | |
-| 5,5 | |
-| 5,6 | |
-| 6,0 | |
-| 6,1 | |
-| 6,2 | |
-| 6,3 | |
-| 6,4 | |
+| Row \ Col | 0 | 1 | 2 | 3 | 4 | 5 | 6 |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **0** | - | → | ←→ | ← | ↖↑↗←→↙↓↘ | ←→↙↓↘ | ↖↑↗←→ |
+| **1** | →↘↓ | ←↙↓ | ↓ | ↖↑↗←→↙↓ | ↖↑↗←→↓ | ↖↑↗←→↓↘ | ↑→↓ |
+| **2** | ↑↗→↘↓ | ↖↑←↙↓ | ↑↓ | ↖↑←↙↓→ | ↑↓←→ | ↑↗→↘↓← | ↑↓← |
+| **3** | ↑↗→ | ↖↑← | ↑ | ↖↑←↙↓↘→ | ↑←↙↓↘→ | ↖↑↗→↘↓↙← | ←→↓ |
+| **4** | →↓ | ←↓ | ↑↗→↓ | ↖↑←↓ | ←↙↓→ | ←↘↓→ | ←↑→ |
+| **5** | ↑→ | ↑← | ↑→↘↓ | ↑←↙↓ | ↖↑←→ | ↗↑←→ | ↑↗→↓↙← |
+| **6** | ↖↑↗→↘↓ | ↑←↙↓→ | ↑→↘↓← | ↖↑←↓→ | ↗↑→↓← | - | - |

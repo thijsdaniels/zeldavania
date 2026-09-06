@@ -55,6 +55,7 @@ public partial class PlayerFalling : State
     private State _attackingState;
 
     private int _airJumpsRemaining;
+    private float _dropGraceTimer;
 
     public override void _Ready()
     {
@@ -64,10 +65,29 @@ public partial class PlayerFalling : State
     public override void Enter()
     {
         UpdateAnimation();
+
+        if (Input.IsActionPressed(Controller.Down))
+        {
+            _dropGraceTimer = 0.15f;
+        }
+    }
+
+    public override void Exit()
+    {
+        _dropGraceTimer = 0;
+        _body.SetCollisionMaskValue(2, true);
     }
 
     public override void UpdatePhysics(double delta)
     {
+        if (_dropGraceTimer > 0)
+        {
+            _dropGraceTimer -= (float)delta;
+        }
+
+        bool ignorePlatforms = Input.IsActionPressed(Controller.Down) || _dropGraceTimer > 0;
+        _body.SetCollisionMaskValue(2, !ignorePlatforms);
+
         switch (true)
         {
             case true when Input.IsActionJustPressed(Controller.X):

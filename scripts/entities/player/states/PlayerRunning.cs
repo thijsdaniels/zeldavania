@@ -69,6 +69,14 @@ public partial class PlayerRunning : State
                 break;
 
             case true
+                when Input.IsActionJustPressed(Controller.Down)
+                    && _body.IsOnOneWayPlatform():
+                _body.SetCollisionMaskValue(2, false);
+                _body.Velocity = new Vector2(_body.Velocity.X, Mathf.Max(_body.Velocity.Y, 50f));
+                Transition(_fallingState);
+                break;
+
+            case true
                 when _ladderDetector.IsOverlapping
                     && Input.IsActionPressed(Controller.Up):
                 Transition(_climbingState);
