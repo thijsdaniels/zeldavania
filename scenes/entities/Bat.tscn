@@ -1,0 +1,188 @@
+[gd_scene format=3 uid="uid://ylus1vn82tmk"]
+
+[ext_resource type="Texture2D" uid="uid://bjwpjf7vklbq8" path="res://assets/textures/entities/Bat.png" id="1_bat_tex"]
+[ext_resource type="Script" uid="uid://jroueoth8mtn" path="res://scripts/entities/enemy/Enemy.cs" id="2_enemy_cs"]
+[ext_resource type="Script" uid="uid://dox7ulgtgmsqx" path="res://scripts/combat/Hitbox.cs" id="3_hitbox_cs"]
+[ext_resource type="Script" uid="uid://cgdh3o50wbtf0" path="res://scripts/combat/Hurtbox.cs" id="4_hurtbox_cs"]
+[ext_resource type="Script" uid="uid://c2v12b43diu82" path="res://scripts/combat/Damageable.cs" id="5_damageable_cs"]
+[ext_resource type="Script" uid="uid://b478pmi0mcql2" path="res://scripts/utilities/FiniteStateMachine.cs" id="6_fsm_cs"]
+[ext_resource type="Script" uid="uid://cpemoiejna67y" path="res://scripts/entities/enemy/states/BatRoosting.cs" id="7_roost_cs"]
+[ext_resource type="Script" uid="uid://bvprqviwxjolf" path="res://scripts/entities/enemy/states/BatSwooping.cs" id="8_swoop_cs"]
+[ext_resource type="Script" uid="uid://dnk8ay6xgkr6g" path="res://scripts/entities/enemy/states/BatFluttering.cs" id="9_flutter_cs"]
+[ext_resource type="Script" uid="uid://dgkytqotychwk" path="res://scripts/entities/enemy/states/BatReturning.cs" id="10_return_cs"]
+[ext_resource type="Script" uid="uid://cab1hs5n315hj" path="res://scripts/entities/enemy/states/EnemyHurt.cs" id="11_hurt_cs"]
+[ext_resource type="Script" uid="uid://dirh2tve8s8mu" path="res://scripts/entities/enemy/states/EnemyDying.cs" id="12_dying_cs"]
+[ext_resource type="AudioStream" uid="uid://bhsnvg46wegfg" path="res://assets/sounds/effects/playerHit.wav" id="13_hit_snd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fly1"]
+atlas = ExtResource("1_bat_tex")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fly2"]
+atlas = ExtResource("1_bat_tex")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hurt"]
+atlas = ExtResource("1_bat_tex")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sleep"]
+atlas = ExtResource("1_bat_tex")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bat"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fly1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fly2")
+}],
+"loop": 1,
+"name": &"Flying",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hurt")
+}],
+"loop": 0,
+"name": &"Hurt",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sleep")
+}],
+"loop": 1,
+"name": &"Sleeping",
+"speed": 1.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_body"]
+radius = 6.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_contact"]
+radius = 6.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hurtbox"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hearing"]
+radius = 120.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vision"]
+radius = 90.0
+
+[node name="Bat" type="CharacterBody2D" unique_id=2016406694 node_paths=PackedStringArray("HearingArea", "VisionArea", "Damageable", "Hurtbox", "StateMachine")]
+collision_layer = 4
+script = ExtResource("2_enemy_cs")
+HearingArea = NodePath("HearingArea")
+VisionArea = NodePath("VisionArea")
+Damageable = NodePath("Damageable")
+Hurtbox = NodePath("Hurtbox")
+StateMachine = NodePath("State")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=99803581]
+sprite_frames = SubResource("SpriteFrames_bat")
+animation = &"Sleeping"
+autoplay = "Sleeping"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=234374517]
+visible = false
+shape = SubResource("CircleShape2D_body")
+
+[node name="ContactHitbox" type="Area2D" parent="." unique_id=900308934]
+visible = false
+collision_layer = 32
+collision_mask = 16
+script = ExtResource("3_hitbox_cs")
+Force = 80.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactHitbox" unique_id=2006237892]
+shape = SubResource("CircleShape2D_contact")
+debug_color = Color(0.85, 0.5, 0.15, 0.3)
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1617980404]
+visible = false
+collision_layer = 128
+collision_mask = 64
+script = ExtResource("4_hurtbox_cs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1770464756]
+shape = SubResource("CircleShape2D_hurtbox")
+debug_color = Color(0.15, 0.85, 0.2, 0.3)
+
+[node name="Damageable" type="Node" parent="." unique_id=324066019]
+script = ExtResource("5_damageable_cs")
+
+[node name="HearingArea" type="Area2D" parent="." unique_id=902184287]
+visible = false
+collision_layer = 0
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HearingArea" unique_id=1232658113]
+shape = SubResource("CircleShape2D_hearing")
+
+[node name="VisionArea" type="Area2D" parent="." unique_id=1020800559]
+visible = false
+collision_layer = 0
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VisionArea" unique_id=1679347544]
+shape = SubResource("CircleShape2D_vision")
+
+[node name="SoundEffects" type="Node2D" parent="." unique_id=1086998658]
+
+[node name="HitEffect" type="AudioStreamPlayer2D" parent="SoundEffects" unique_id=2055036904]
+stream = ExtResource("13_hit_snd")
+
+[node name="State" type="Node" parent="." unique_id=1623941022 node_paths=PackedStringArray("_state")]
+script = ExtResource("6_fsm_cs")
+_state = NodePath("Roosting")
+
+[node name="Roosting" type="Node" parent="State" unique_id=1866301973 node_paths=PackedStringArray("_enemy", "_sprite", "_onWake")]
+script = ExtResource("7_roost_cs")
+_enemy = NodePath("../..")
+_sprite = NodePath("../../AnimatedSprite2D")
+_onWake = NodePath("../Fluttering")
+
+[node name="Swooping" type="Node" parent="State" unique_id=1576752301 node_paths=PackedStringArray("_enemy", "_sprite", "_onSwoopComplete")]
+script = ExtResource("8_swoop_cs")
+_enemy = NodePath("../..")
+_sprite = NodePath("../../AnimatedSprite2D")
+_onSwoopComplete = NodePath("../Fluttering")
+
+[node name="Fluttering" type="Node" parent="State" unique_id=1947477474 node_paths=PackedStringArray("_enemy", "_sprite", "_onSwoopReady", "_onTargetLost")]
+script = ExtResource("9_flutter_cs")
+_enemy = NodePath("../..")
+_sprite = NodePath("../../AnimatedSprite2D")
+_onSwoopReady = NodePath("../Swooping")
+_onTargetLost = NodePath("../Returning")
+
+[node name="Returning" type="Node" parent="State" unique_id=622555536 node_paths=PackedStringArray("_enemy", "_sprite", "_roostingState", "_onRoostReached")]
+script = ExtResource("10_return_cs")
+_enemy = NodePath("../..")
+_sprite = NodePath("../../AnimatedSprite2D")
+_roostingState = NodePath("../Roosting")
+_onRoostReached = NodePath("../Roosting")
+
+[node name="Hurt" type="Node" parent="State" unique_id=122254288 node_paths=PackedStringArray("_enemy", "_hurtbox", "_damageable", "_sprite", "_soundEffect", "_chasingState", "_standingState", "_dyingState")]
+script = ExtResource("11_hurt_cs")
+_enemy = NodePath("../..")
+_hurtbox = NodePath("../../Hurtbox")
+_damageable = NodePath("../../Damageable")
+_sprite = NodePath("../../AnimatedSprite2D")
+_soundEffect = NodePath("../../SoundEffects/HitEffect")
+_chasingState = NodePath("../Fluttering")
+_standingState = NodePath("../Returning")
+_dyingState = NodePath("../Dying")
+_gravity = 200.0
+
+[node name="Dying" type="Node" parent="State" unique_id=788982838 node_paths=PackedStringArray("_enemy", "_sprite")]
+script = ExtResource("12_dying_cs")
+_enemy = NodePath("../..")
+_sprite = NodePath("../../AnimatedSprite2D")
+_animation = "Hurt"
+_gravity = 400.0
