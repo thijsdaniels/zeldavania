@@ -15,7 +15,7 @@ public static class WithSynchronizedAnimations
         Vector2 direction
     )
     {
-        sprite.SpeedScale = direction.Length();
+        sprite.SpeedScale = direction.Length() > 0 ? direction.Length() : 1.0f;
 
         if (direction.X != 0)
             sprite.FlipH = direction.X > 0;

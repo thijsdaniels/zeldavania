@@ -21,6 +21,11 @@
 [ext_resource type="Script" uid="uid://0ocbivbfju3q" path="res://scripts/entities/player/states/PlayerHurt.cs" id="20_hrt03"]
 [ext_resource type="AudioStream" uid="uid://bhsnvg46wegfg" path="res://assets/sounds/effects/playerHit.wav" id="21_hit01"]
 [ext_resource type="AudioStream" uid="uid://b700nvcdyqty7" path="res://assets/sounds/effects/playerDie.wav" id="22_die02"]
+[ext_resource type="Script" path="res://scripts/entities/player/states/PlayerAttacking.cs" id="23_atk01"]
+[ext_resource type="Script" uid="uid://dox7ulgtgmsqx" path="res://scripts/combat/Hitbox.cs" id="24_hitbox"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sword_hitbox"]
+size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hurtbox_player"]
 size = Vector2(8, 14)
@@ -371,6 +376,18 @@ position = Vector2(0, -7)
 shape = SubResource("RectangleShape2D_hurtbox_player")
 debug_color = Color(0.9, 0.2, 0.2, 0.42)
 
+[node name="SwordHitbox" type="Area2D" parent="." unique_id=1412093847]
+visible = false
+position = Vector2(10, -7)
+collision_layer = 64
+collision_mask = 128
+script = ExtResource("24_hitbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SwordHitbox" unique_id=1592837461]
+shape = SubResource("RectangleShape2D_sword_hitbox")
+disabled = true
+debug_color = Color(0.9, 0.8, 0.1, 0.42)
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1619384801]
 visible = false
 position = Vector2(0, -7)
@@ -422,7 +439,7 @@ debug_color = Color(0.886275, 0.290196, 0.411765, 0.419608)
 script = ExtResource("2_uv754")
 _state = NodePath("Standing")
 
-[node name="Standing" type="Node" parent="State" unique_id=1162814849 node_paths=PackedStringArray("_body", "_sprite", "_climbingState", "_ladderDetector", "_fallingState", "_runningState", "_jumpingState")]
+[node name="Standing" type="Node" parent="State" unique_id=1162814849 node_paths=PackedStringArray("_body", "_sprite", "_climbingState", "_ladderDetector", "_fallingState", "_runningState", "_jumpingState", "_attackingState")]
 script = ExtResource("6_wk3pc")
 _body = NodePath("../..")
 _sprite = NodePath("../../AnimatedSprite2D")
@@ -431,8 +448,9 @@ _ladderDetector = NodePath("../../LadderDetector2D")
 _fallingState = NodePath("../Falling")
 _runningState = NodePath("../Running")
 _jumpingState = NodePath("../Jumping")
+_attackingState = NodePath("../Attacking")
 
-[node name="Running" type="Node" parent="State" unique_id=820448027 node_paths=PackedStringArray("_body", "_sprite", "_standingState", "_fallingState", "_jumpingState", "_climbingState", "_ladderDetector")]
+[node name="Running" type="Node" parent="State" unique_id=820448027 node_paths=PackedStringArray("_body", "_sprite", "_standingState", "_fallingState", "_jumpingState", "_climbingState", "_ladderDetector", "_attackingState")]
 script = ExtResource("7_iaxy0")
 _body = NodePath("../..")
 _sprite = NodePath("../../AnimatedSprite2D")
@@ -441,8 +459,9 @@ _fallingState = NodePath("../Falling")
 _jumpingState = NodePath("../Jumping")
 _climbingState = NodePath("../Climbing")
 _ladderDetector = NodePath("../../LadderDetector2D")
+_attackingState = NodePath("../Attacking")
 
-[node name="Falling" type="Node" parent="State" unique_id=808392090 node_paths=PackedStringArray("_body", "_sprite", "_airJumpingState", "_landingState", "_swimmingState", "_waterDetector", "_climbingState", "_ladderDetector")]
+[node name="Falling" type="Node" parent="State" unique_id=808392090 node_paths=PackedStringArray("_body", "_sprite", "_airJumpingState", "_landingState", "_swimmingState", "_waterDetector", "_climbingState", "_ladderDetector", "_attackingState")]
 script = ExtResource("8_032je")
 _body = NodePath("../..")
 _sprite = NodePath("../../AnimatedSprite2D")
@@ -452,6 +471,18 @@ _swimmingState = NodePath("../Swimming")
 _waterDetector = NodePath("../../WaterDetector2D")
 _climbingState = NodePath("../Climbing")
 _ladderDetector = NodePath("../../LadderDetector2D")
+_attackingState = NodePath("../Attacking")
+
+[node name="Attacking" type="Node" parent="State" unique_id=1849201948 node_paths=PackedStringArray("_body", "_sprite", "_hitbox", "_hitboxShape", "_soundEffect", "_standingState", "_runningState", "_fallingState")]
+script = ExtResource("23_atk01")
+_body = NodePath("../..")
+_sprite = NodePath("../../AnimatedSprite2D")
+_hitbox = NodePath("../../SwordHitbox")
+_hitboxShape = NodePath("../../SwordHitbox/CollisionShape2D")
+_soundEffect = NodePath("../../SoundEffects/PlayerSwordSwingEffect")
+_standingState = NodePath("../Standing")
+_runningState = NodePath("../Running")
+_fallingState = NodePath("../Falling")
 
 [node name="Jumping" type="Node" parent="State" unique_id=99775687 node_paths=PackedStringArray("_body", "_soundEffect", "_fallingState")]
 script = ExtResource("9_2uq2y")
@@ -517,6 +548,10 @@ volume_db = -5.0
 
 [node name="PlayerHitEffect" type="AudioStreamPlayer2D" parent="SoundEffects" unique_id=1808971896]
 stream = ExtResource("21_hit01")
+
+[node name="PlayerSwordSwingEffect" type="AudioStreamPlayer2D" parent="SoundEffects" unique_id=1894021948]
+stream = ExtResource("15_yjmct")
+pitch_scale = 1.25
 
 [node name="PlayerDieEffect" type="AudioStreamPlayer2D" parent="SoundEffects" unique_id=1520652343]
 stream = ExtResource("22_die02")

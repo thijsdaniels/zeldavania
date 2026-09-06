@@ -27,6 +27,10 @@ public partial class PlayerStanding : State
     [Export]
     private State _jumpingState;
 
+    [ExportGroup("Attacking")]
+    [Export]
+    private State _attackingState;
+
     public override void Enter()
     {
         _sprite.Play("Idle");
@@ -38,6 +42,10 @@ public partial class PlayerStanding : State
         {
             case true when !_body.IsOnFloor():
                 Transition(_fallingState);
+                break;
+
+            case true when Input.IsActionJustPressed(Controller.X):
+                Transition(_attackingState);
                 break;
 
             case true when Controller.GetHorizontalDirection() != 0:
@@ -59,10 +67,6 @@ public partial class PlayerStanding : State
                     && Input.IsActionPressed(Controller.Up):
                 Transition(_climbingState);
                 break;
-
-            // case true when Input.IsActionJustPressed(Controller.X):
-            //     Transition(_attackingState);
-            //     break;
         }
     }
 }

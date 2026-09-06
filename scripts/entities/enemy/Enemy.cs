@@ -1,4 +1,5 @@
 using Godot;
+using Zeldavania.Combat;
 
 public partial class Enemy : CharacterBody2D
 {
@@ -10,6 +11,15 @@ public partial class Enemy : CharacterBody2D
 
     [Export]
     public TileDetector2D WaterDetector;
+
+    [Export]
+    public Damageable Damageable;
+
+    [Export]
+    public Hurtbox Hurtbox;
+
+    [Export]
+    public FiniteStateMachine StateMachine;
 
     public Player Target;
 
@@ -24,23 +34,27 @@ public partial class Enemy : CharacterBody2D
 
     public override void _Ready()
     {
-        HearingArea.BodyEntered += OnHearingAreaBodyEntered;
-        VisionArea.BodyEntered += OnVisionAreaBodyEntered;
-        VisionArea.BodyExited += OnVisionAreaBodyExited;
+        if (HearingArea != null)
+            HearingArea.BodyEntered += OnHearingAreaBodyEntered;
+        if (VisionArea != null)
+        {
+            VisionArea.BodyEntered += OnVisionAreaBodyEntered;
+            VisionArea.BodyExited += OnVisionAreaBodyExited;
+        }
     }
 
     public void OnHearingAreaBodyEntered(Node body)
     {
         if (body is Player)
-            EmitSignal("OnAlerted", body);
+            EmitSignal(SignalName.OnAlerted, body);
     }
 
     public void OnVisionAreaBodyEntered(Node body)
     {
-        if (Target == null && body is Player)
+        if (Target == null && body is Player player)
         {
-            Target = body as Player;
-            EmitSignal("OnTargetSpotted", body as Player);
+            Target = player;
+            EmitSignal(SignalName.OnTargetSpotted, player);
         }
     }
 
@@ -49,7 +63,7 @@ public partial class Enemy : CharacterBody2D
         if (body == Target)
         {
             Target = null;
-            EmitSignal("OnTargetLost", body as Player);
+            EmitSignal(SignalName.OnTargetLost, body as Player);
         }
     }
 

@@ -50,6 +50,10 @@ public partial class PlayerFalling : State
     [Export]
     private TileDetector2D _ladderDetector;
 
+    [ExportGroup("Attacking")]
+    [Export]
+    private State _attackingState;
+
     private int _airJumpsRemaining;
 
     public override void _Ready()
@@ -66,6 +70,10 @@ public partial class PlayerFalling : State
     {
         switch (true)
         {
+            case true when Input.IsActionJustPressed(Controller.X):
+                Transition(_attackingState);
+                break;
+
             case true
                 when Input.IsActionJustPressed(Controller.A)
                     && _airJumpsRemaining > 0:

@@ -30,6 +30,10 @@ public partial class PlayerRunning : State
     [Export]
     private State _jumpingState;
 
+    [ExportGroup("Attacking")]
+    [Export]
+    private State _attackingState;
+
     [ExportGroup("Climbing")]
     [Export]
     private State _climbingState;
@@ -48,12 +52,16 @@ public partial class PlayerRunning : State
 
         switch (true)
         {
-            case true when direction == 0 && _body.Velocity.X == 0:
-                Transition(_standingState);
-                break;
-
             case true when !_body.IsOnFloor():
                 Transition(_fallingState);
+                break;
+
+            case true when Input.IsActionJustPressed(Controller.X):
+                Transition(_attackingState);
+                break;
+
+            case true when direction == 0 && _body.Velocity.X == 0:
+                Transition(_standingState);
                 break;
 
             case true when Input.IsActionJustPressed(Controller.A):
