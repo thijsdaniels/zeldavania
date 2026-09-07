@@ -6,9 +6,16 @@ namespace Zeldavania.Inventory;
 public partial class BowItem : EquipmentItem
 {
     [Export]
-    private State _aimingState;
+    private PlayerAiming _aimingState;
 
-    public override State GetActionState() => _aimingState;
+    public override State Use(Player player, string actionButton)
+    {
+        if (CurrentAmmo <= 0 || _aimingState == null)
+        {
+            return null;
+        }
 
-    public override bool CanUse(Player player) => CurrentAmmo > 0;
+        _aimingState.TriggerAction = actionButton;
+        return _aimingState;
+    }
 }

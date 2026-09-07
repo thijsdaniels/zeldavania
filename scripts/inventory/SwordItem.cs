@@ -8,7 +8,5 @@ public partial class SwordItem : EquipmentItem
     [Export]
     private State _attackState;
 
-    public override State GetActionState() => _attackState;
-
-    public override bool CanUse(Player player) => true;
+    public override State Use(Player player, string actionButton) => _attackState;
 }

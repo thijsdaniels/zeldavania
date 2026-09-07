@@ -26,7 +26,5 @@ public partial class EquipmentItem : Node
     [Export]
     public int CurrentAmmo { get; set; }
 
-    public virtual State GetActionState() => null;
-
-    public virtual bool CanUse(Player player) => true;
+    public virtual State Use(Player player, string actionButton) => null;
 }

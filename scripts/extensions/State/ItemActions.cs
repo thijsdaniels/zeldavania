@@ -23,19 +23,11 @@ public static class StateItemExtensions
             if (Input.IsActionJustPressed(actionName))
             {
                 var item = player.Inventory.GetItemInSlot(slot);
-                if (item != null && item.CanUse(player))
+                if (item != null)
                 {
-                    var actionState = item.GetActionState();
+                    var actionState = item.Use(player, actionName);
                     if (actionState != null)
                     {
-                        if (actionState is IActionTriggerable triggerable)
-                        {
-                            if (!triggerable.TryInitialize(player, actionName))
-                            {
-                                continue;
-                            }
-                        }
-
                         targetState = actionState;
                         return true;
                     }
