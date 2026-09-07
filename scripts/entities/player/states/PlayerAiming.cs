@@ -1,6 +1,7 @@
 using Godot;
+using Zeldavania.Inventory;
 
-public partial class PlayerAiming : State
+public partial class PlayerAiming : State, IActionTriggerable
 {
     [Export]
     private CharacterBody2D _body;
@@ -47,7 +48,23 @@ public partial class PlayerAiming : State
     [Export]
     private PlayerShooting _shootingState;
 
+    [Export]
+    private BowItem _bowItem;
+
     public static float CurrentElevation { get; set; } = 0f;
+
+    private string _triggerAction = Controller.B;
+
+    public bool TryInitialize(Player player, string actionButton)
+    {
+        if (_bowItem != null && !_bowItem.CanUse(player))
+        {
+            return false;
+        }
+
+        _triggerAction = string.IsNullOrEmpty(actionButton) ? Controller.B : actionButton;
+        return true;
+    }
 
     public override void _Ready()
     {
@@ -129,7 +146,7 @@ public partial class PlayerAiming : State
 
         UpdateCrosshairPosition();
 
-        if (!Input.IsActionPressed(Controller.B))
+        if (!Input.IsActionPressed(_triggerAction))
         {
             float facingDir = (_sprite != null && _sprite.FlipH) ? -1f : 1f;
             Vector2 aimDir = new Vector2(

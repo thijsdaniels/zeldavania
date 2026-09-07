@@ -69,7 +69,7 @@ public partial class Arrow : Area2D
             Rotation = _velocity.Angle();
         }
 
-        Position += _velocity * (float)delta;
+        GlobalPosition += _velocity * (float)delta;
     }
 
     private void HandleBodyEntered(Node2D body)

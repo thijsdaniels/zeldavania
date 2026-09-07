@@ -1,10 +1,16 @@
 using Godot;
 using Zeldavania.Combat;
+using Zeldavania.Inventory;
 
 public partial class Player : CharacterBody2D
 {
     [Export]
     private Damageable _damageable;
+
+    [Export]
+    private Inventory _inventory;
+
+    public Inventory Inventory => _inventory;
 
     [Export]
     private AudioStreamPlayer2D _deathSoundEffect;

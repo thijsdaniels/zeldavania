@@ -27,6 +27,11 @@
 [ext_resource type="Script" path="res://scripts/entities/player/states/PlayerShooting.cs" id="26_sht01"]
 [ext_resource type="PackedScene" uid="uid://cx6q8nve23jkm" path="res://scenes/objects/Arrow.tscn" id="27_arr01"]
 [ext_resource type="Texture2D" path="res://assets/textures/objects/CrosshairSingle.png" id="28_crs01"]
+[ext_resource type="Script" path="res://scripts/inventory/Inventory.cs" id="29_inv01"]
+[ext_resource type="Script" path="res://scripts/inventory/SwordItem.cs" id="30_swd01"]
+[ext_resource type="Script" path="res://scripts/inventory/BowItem.cs" id="31_bow01"]
+[ext_resource type="Texture2D" path="res://assets/textures/objects/items/Sword.png" id="32_texswd"]
+[ext_resource type="Texture2D" path="res://assets/textures/objects/items/Bow.png" id="33_texbow"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sword_hitbox"]
 size = Vector2(16, 16)
@@ -356,11 +361,12 @@ size = Vector2(5, 4)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o7l1g"]
 size = Vector2(4, 1)
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1330185126 node_paths=PackedStringArray("_damageable", "_deathSoundEffect")]
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1330185126 node_paths=PackedStringArray("_damageable", "_inventory", "_deathSoundEffect")]
 collision_layer = 256
 collision_mask = 3
 script = ExtResource("1_tiuq8")
 _damageable = NodePath("Damageable")
+_inventory = NodePath("Inventory")
 _deathSoundEffect = NodePath("SoundEffects/PlayerDieEffect")
 
 [node name="Damageable" type="Node" parent="." unique_id=1260584918]
@@ -447,33 +453,32 @@ texture = ExtResource("28_crs01")
 script = ExtResource("2_uv754")
 _state = NodePath("Standing")
 
-[node name="Standing" type="Node" parent="State" unique_id=1162814849 node_paths=PackedStringArray("_body", "_sprite", "_climbingState", "_ladderDetector", "_fallingState", "_runningState", "_jumpingState", "_attackingState", "_aimingState")]
+[node name="Standing" type="Node" parent="State" unique_id=1162814849 node_paths=PackedStringArray("_body", "_player", "_sprite", "_climbingState", "_ladderDetector", "_fallingState", "_runningState", "_jumpingState")]
 script = ExtResource("6_wk3pc")
 _body = NodePath("../..")
+_player = NodePath("../..")
 _sprite = NodePath("../../AnimatedSprite2D")
 _climbingState = NodePath("../Climbing")
 _ladderDetector = NodePath("../../LadderDetector2D")
 _fallingState = NodePath("../Falling")
 _runningState = NodePath("../Running")
 _jumpingState = NodePath("../Jumping")
-_attackingState = NodePath("../Attacking")
-_aimingState = NodePath("../Aiming")
 
-[node name="Running" type="Node" parent="State" unique_id=820448027 node_paths=PackedStringArray("_body", "_sprite", "_standingState", "_fallingState", "_jumpingState", "_climbingState", "_ladderDetector", "_attackingState", "_aimingState")]
+[node name="Running" type="Node" parent="State" unique_id=820448027 node_paths=PackedStringArray("_body", "_player", "_sprite", "_standingState", "_fallingState", "_jumpingState", "_climbingState", "_ladderDetector")]
 script = ExtResource("7_iaxy0")
 _body = NodePath("../..")
+_player = NodePath("../..")
 _sprite = NodePath("../../AnimatedSprite2D")
 _standingState = NodePath("../Standing")
 _fallingState = NodePath("../Falling")
 _jumpingState = NodePath("../Jumping")
 _climbingState = NodePath("../Climbing")
 _ladderDetector = NodePath("../../LadderDetector2D")
-_attackingState = NodePath("../Attacking")
-_aimingState = NodePath("../Aiming")
 
-[node name="Falling" type="Node" parent="State" unique_id=808392090 node_paths=PackedStringArray("_body", "_sprite", "_airJumpingState", "_landingState", "_swimmingState", "_waterDetector", "_climbingState", "_ladderDetector", "_attackingState", "_aimingState")]
+[node name="Falling" type="Node" parent="State" unique_id=808392090 node_paths=PackedStringArray("_body", "_player", "_sprite", "_airJumpingState", "_landingState", "_swimmingState", "_waterDetector", "_climbingState", "_ladderDetector")]
 script = ExtResource("8_032je")
 _body = NodePath("../..")
+_player = NodePath("../..")
 _sprite = NodePath("../../AnimatedSprite2D")
 _airJumpingState = NodePath("../AirJumping")
 _landingState = NodePath("../Landing")
@@ -481,8 +486,6 @@ _swimmingState = NodePath("../Swimming")
 _waterDetector = NodePath("../../WaterDetector2D")
 _climbingState = NodePath("../Climbing")
 _ladderDetector = NodePath("../../LadderDetector2D")
-_attackingState = NodePath("../Attacking")
-_aimingState = NodePath("../Aiming")
 
 [node name="Attacking" type="Node" parent="State" unique_id=1849201948 node_paths=PackedStringArray("_body", "_sprite", "_hitbox", "_hitboxShape", "_soundEffect", "_standingState", "_runningState", "_fallingState")]
 script = ExtResource("23_atk01")
@@ -495,18 +498,20 @@ _standingState = NodePath("../Standing")
 _runningState = NodePath("../Running")
 _fallingState = NodePath("../Falling")
 
-[node name="Aiming" type="Node" parent="State" unique_id=2099881122 node_paths=PackedStringArray("_body", "_sprite", "_crosshair", "_shootingState")]
+[node name="Aiming" type="Node" parent="State" unique_id=2099881122 node_paths=PackedStringArray("_body", "_sprite", "_crosshair", "_shootingState", "_bowItem")]
 script = ExtResource("25_aim01")
 _body = NodePath("../..")
 _sprite = NodePath("../../AnimatedSprite2D")
 _crosshair = NodePath("../../Crosshair")
 _shootingState = NodePath("../Shooting")
+_bowItem = NodePath("../../Inventory/Bow")
 
-[node name="Shooting" type="Node" parent="State" unique_id=2099881123 node_paths=PackedStringArray("_body", "_sprite", "_soundEffect", "_standingState", "_runningState", "_fallingState")]
+[node name="Shooting" type="Node" parent="State" unique_id=2099881123 node_paths=PackedStringArray("_body", "_sprite", "_bowItem", "_soundEffect", "_standingState", "_runningState", "_fallingState")]
 script = ExtResource("26_sht01")
 _body = NodePath("../..")
 _sprite = NodePath("../../AnimatedSprite2D")
 _arrowScene = ExtResource("27_arr01")
+_bowItem = NodePath("../../Inventory/Bow")
 _soundEffect = NodePath("../../SoundEffects/PlayerShootEffect")
 _standingState = NodePath("../Standing")
 _runningState = NodePath("../Running")
@@ -588,4 +593,28 @@ pitch_scale = 1.5
 
 [node name="PlayerDieEffect" type="AudioStreamPlayer2D" parent="SoundEffects" unique_id=1520652343]
 stream = ExtResource("22_die02")
+
+[node name="Inventory" type="Node" parent="." unique_id=1928374650 node_paths=PackedStringArray("_slotXItem", "_slotBItem")]
+script = ExtResource("29_inv01")
+_slotXItem = NodePath("Sword")
+_slotBItem = NodePath("Bow")
+
+[node name="Sword" type="Node" parent="Inventory" unique_id=1928374651 node_paths=PackedStringArray("_attackState")]
+script = ExtResource("30_swd01")
+_attackState = NodePath("../../State/Attacking")
+ItemId = "sword"
+ItemName = "Kokiri Sword"
+Description = "A trusted blade for close-quarters melee combat."
+Icon = ExtResource("32_texswd")
+
+[node name="Bow" type="Node" parent="Inventory" unique_id=1928374652 node_paths=PackedStringArray("_aimingState")]
+script = ExtResource("31_bow01")
+_aimingState = NodePath("../../State/Aiming")
+ItemId = "bow"
+ItemName = "Fairy Bow"
+Description = "Fires piercing arrows at distant targets."
+Icon = ExtResource("33_texbow")
+IsConsumable = true
+MaxAmmo = 30
+CurrentAmmo = 30
 

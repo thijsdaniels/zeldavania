@@ -18,6 +18,10 @@ public partial class PlayerAttacking : State
     [Export]
     private AudioStreamPlayer2D _soundEffect;
 
+    [ExportGroup("Animation")]
+    [Export]
+    private string _animationName = "Sword";
+
     [ExportGroup("Physics")]
     [Export]
     private float _deceleration = 800f;
@@ -104,7 +108,7 @@ public partial class PlayerAttacking : State
 
         if (_sprite != null)
         {
-            _sprite.Play("Sword");
+            _sprite.Play(_animationName);
             _sprite.Frame = 0;
         }
 
@@ -165,7 +169,7 @@ public partial class PlayerAttacking : State
 
     private void HandleAnimationFinished()
     {
-        if (!_isActive || _sprite.Animation != "Sword")
+        if (!_isActive || _sprite.Animation != _animationName)
             return;
 
         if (_hasBufferedAttack)

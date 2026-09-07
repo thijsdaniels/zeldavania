@@ -28,9 +28,15 @@ public partial class PauseMenu : Control
         if (@event.IsActionPressed("Start"))
         {
             if (!GetTree().Paused)
+            {
                 Pause();
-            else
+                GetViewport().SetInputAsHandled();
+            }
+            else if (Visible)
+            {
                 Resume();
+                GetViewport().SetInputAsHandled();
+            }
         }
     }
 
@@ -54,7 +60,8 @@ public partial class PauseMenu : Control
         GetTree().Paused = true;
 
         Visible = true;
-        _animationPlayer.Play("Open");
+        _animationPlayer?.Play("Open");
+        _resumeButton?.GrabFocus();
     }
 
     private void Resume()
@@ -62,7 +69,7 @@ public partial class PauseMenu : Control
         GetTree().Paused = false;
 
         Visible = false;
-        _animationPlayer.PlayBackwards("Open");
+        _animationPlayer?.PlayBackwards("Open");
     }
 
     private void Restart()

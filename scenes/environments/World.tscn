@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://c6l8v2e3k47am" path="res://scenes/userInterface/Hud.tscn" id="7_hud"]
 [ext_resource type="PackedScene" uid="uid://ylus1vn82tmk" path="res://scenes/entities/Bat.tscn" id="8_4ntd8"]
 [ext_resource type="PackedScene" uid="uid://cdg3agf57t0qv" path="res://scenes/objects/Torch.tscn" id="8_torch"]
+[ext_resource type="PackedScene" uid="uid://c7t4k8yn1w5pm" path="res://scenes/userInterface/InventoryMenu.tscn" id="9_invmenu"]
 
 [node name="Node2D" type="Node2D" unique_id=1939464797]
 
@@ -26,6 +27,7 @@ grow_vertical = 2
 color = Color(0.0939093, 0.106358, 0.171831, 1)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=559304439]
+process_mode = 3
 stream = ExtResource("1_r1tax")
 volume_db = -10.0
 autoplay = true
@@ -85,6 +87,9 @@ position = Vector2(-336, 64)
 [node name="Goblin2" parent="." unique_id=1850220387 instance=ExtResource("5_2nnh2")]
 position = Vector2(416, -128)
 
+[node name="Bat" parent="." unique_id=324840141 instance=ExtResource("8_4ntd8")]
+position = Vector2(170, -42)
+
 [node name="Torch1" parent="." unique_id=949516270 instance=ExtResource("8_torch")]
 position = Vector2(-504, -64)
 
@@ -97,13 +102,15 @@ position = Vector2(75, -48)
 [node name="Torch4" parent="." unique_id=1898601528 instance=ExtResource("8_torch")]
 position = Vector2(104, 192)
 
-[node name="Hud" parent="." unique_id=1801539227 node_paths=PackedStringArray("_playerDamageable") instance=ExtResource("7_hud")]
+[node name="Hud" parent="." unique_id=1801539227 node_paths=PackedStringArray("_playerDamageable", "_playerInventory") instance=ExtResource("7_hud")]
 _playerDamageable = NodePath("../Player/Damageable")
+_playerInventory = NodePath("../Player/Inventory")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=141610891]
 
 [node name="PauseMenu" parent="CanvasLayer" unique_id=395342553 instance=ExtResource("6_deqga")]
 visible = false
 
-[node name="Bat" parent="." unique_id=324840141 instance=ExtResource("8_4ntd8")]
-position = Vector2(170, -42)
+[node name="InventoryMenu" parent="CanvasLayer" unique_id=1942871650 node_paths=PackedStringArray("_inventory") instance=ExtResource("9_invmenu")]
+visible = false
+_inventory = NodePath("../../Player/Inventory")

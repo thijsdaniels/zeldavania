@@ -9,6 +9,7 @@ public static class Controller
     public static readonly string A = "A";
     public static readonly string B = "B";
     public static readonly string X = "X";
+    public static readonly string Y = "Y";
 
     public static Vector2 GetDirection()
     {

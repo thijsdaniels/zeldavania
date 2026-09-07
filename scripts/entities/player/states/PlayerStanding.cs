@@ -1,9 +1,13 @@
 using Godot;
+using Zeldavania.Extensions;
 
 public partial class PlayerStanding : State
 {
     [Export]
     private CharacterBody2D _body;
+
+    [Export]
+    private Player _player;
 
     [Export]
     private AnimatedSprite2D _sprite;
@@ -27,13 +31,13 @@ public partial class PlayerStanding : State
     [Export]
     private State _jumpingState;
 
-    [ExportGroup("Attacking")]
-    [Export]
-    private State _attackingState;
-
-    [ExportGroup("Aiming")]
-    [Export]
-    private State _aimingState;
+    public override void _Ready()
+    {
+        if (_player == null && _body is Player player)
+        {
+            _player = player;
+        }
+    }
 
     public override void Enter()
     {
@@ -48,23 +52,13 @@ public partial class PlayerStanding : State
                 Transition(_fallingState);
                 break;
 
-            case true when Input.IsActionJustPressed(Controller.X):
-                Transition(_attackingState);
-                break;
-
-            case true when Input.IsActionJustPressed(Controller.B):
-                Transition(_aimingState);
+            case true when this.TryTriggerItemAction(_player, out State targetState):
+                Transition(targetState);
                 break;
 
             case true when Controller.GetHorizontalDirection() != 0:
                 Transition(_runningState);
                 break;
-
-            // case true
-            //     when interactionDetector.IsOverlapping
-            //         && Input.IsActionJustPressed(Controller.A):
-            //     Transition(_interactingState);
-            //     break;
 
             case true when Input.IsActionJustPressed(Controller.A):
                 Transition(_jumpingState);

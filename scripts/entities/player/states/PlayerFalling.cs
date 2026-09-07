@@ -1,9 +1,13 @@
 using Godot;
+using Zeldavania.Extensions;
 
 public partial class PlayerFalling : State
 {
     [Export]
     private CharacterBody2D _body;
+
+    [Export]
+    private Player _player;
 
     [Export]
     private AnimatedSprite2D _sprite;
@@ -50,20 +54,16 @@ public partial class PlayerFalling : State
     [Export]
     private TileDetector2D _ladderDetector;
 
-    [ExportGroup("Attacking")]
-    [Export]
-    private State _attackingState;
-
-    [ExportGroup("Aiming")]
-    [Export]
-    private State _aimingState;
-
     private int _airJumpsRemaining;
     private float _dropGraceTimer;
 
     public override void _Ready()
     {
         _airJumpsRemaining = _airJumps;
+        if (_player == null && _body is Player player)
+        {
+            _player = player;
+        }
     }
 
     public override void Enter()
@@ -94,12 +94,8 @@ public partial class PlayerFalling : State
 
         switch (true)
         {
-            case true when Input.IsActionJustPressed(Controller.X):
-                Transition(_attackingState);
-                break;
-
-            case true when Input.IsActionJustPressed(Controller.B):
-                Transition(_aimingState);
+            case true when this.TryTriggerItemAction(_player, out State targetState):
+                Transition(targetState);
                 break;
 
             case true

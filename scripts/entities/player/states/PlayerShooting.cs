@@ -1,4 +1,5 @@
 using Godot;
+using Zeldavania.Inventory;
 
 public partial class PlayerShooting : State
 {
@@ -10,6 +11,9 @@ public partial class PlayerShooting : State
 
     [Export]
     private PackedScene _arrowScene;
+
+    [Export]
+    private BowItem _bowItem;
 
     [Export]
     private Vector2 _muzzleOffset = new Vector2(8f, -12f);
@@ -126,6 +130,19 @@ public partial class PlayerShooting : State
 
         _arrowSpawned = true;
 
+        if (_bowItem != null)
+        {
+            var inventory = _bowItem.GetParent() as Inventory;
+            if (inventory != null)
+            {
+                inventory.ConsumeAmmo(_bowItem, 1);
+            }
+            else
+            {
+                _bowItem.CurrentAmmo = Mathf.Max(0, _bowItem.CurrentAmmo - 1);
+            }
+        }
+
         var arrowInstance = _arrowScene.Instantiate<Arrow>();
         if (arrowInstance != null)
         {
@@ -135,10 +152,9 @@ public partial class PlayerShooting : State
                 _muzzleOffset.Y
             );
 
-            arrowInstance.GlobalPosition = spawnPos;
-
             var treeRoot = _body.GetTree().CurrentScene ?? _body.GetParent();
             treeRoot.AddChild(arrowInstance);
+            arrowInstance.GlobalPosition = spawnPos;
 
             arrowInstance.Launch(AimDirection);
             _soundEffect?.Play();

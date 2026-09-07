@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://b23q1e7yv8klm"]
+
+[ext_resource type="Script" uid="uid://ckr2fmx0j8y7e" path="res://scripts/userInterface/InventoryGridSlot.cs" id="1_slot"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slot_bg"]
+bg_color = Color(0.12, 0.12, 0.18, 0.85)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.35, 0.35, 0.45, 0.8)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_focus"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.85, 0.2, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_badge"]
+font_size = 8
+font_color = Color(1, 0.9, 0.3, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[node name="InventoryGridSlot" type="Control" node_paths=PackedStringArray("_iconTexture", "_focusPanel", "_assignedBadge")]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 28.0
+offset_bottom = 28.0
+script = ExtResource("1_slot")
+_iconTexture = NodePath("Panel/Icon")
+_focusPanel = NodePath("FocusPanel")
+_assignedBadge = NodePath("AssignedBadge")
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot_bg")
+
+[node name="Icon" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 3
+
+[node name="FocusPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_focus")
+
+[node name="AssignedBadge" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -10.0
+offset_top = -10.0
+offset_right = -1.0
+offset_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "X"
+label_settings = SubResource("LabelSettings_badge")
+horizontal_alignment = 2
