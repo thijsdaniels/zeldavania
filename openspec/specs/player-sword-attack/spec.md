@@ -7,25 +7,26 @@ Governs the player character's offensive sword attack state, swing animation lif
 ## Requirements
 
 ### Requirement: Attack Execution & State Entry
-The system SHALL transition the player into the `PlayerAttacking` state when the Attack action (`Controller.X` / Keyboard `J` or `X`) is triggered from valid states.
+The system SHALL transition the player into the `PlayerAttacking` state when any action button (`Controller.X`, `Controller.Y`, or `Controller.B`) assigned to a melee weapon is triggered from valid states, playing the weapon's configured attack animation.
 
 #### Scenario: Attacking while standing
 - **GIVEN** the player is in `PlayerStanding` state on the floor
-- **WHEN** the Attack action is pressed
+- **WHEN** an action button assigned to the Sword is pressed
 - **THEN** the player transitions to `PlayerAttacking` state
-- **AND** the `"Sword"` animation plays on the animated sprite.
+- **AND** the configured attack animation (e.g. `"Sword"`) plays on the animated sprite.
 
 #### Scenario: Attacking while running
 - **GIVEN** the player is in `PlayerRunning` state on the floor
-- **WHEN** the Attack action is pressed
+- **WHEN** an action button assigned to the Sword is pressed
 - **THEN** the player transitions to `PlayerAttacking` state
-- **AND** the `"Sword"` animation plays on the animated sprite.
+- **AND** the configured attack animation plays on the animated sprite.
 
 #### Scenario: Attacking while airborne
 - **GIVEN** the player is in `PlayerFalling` state in the air
-- **WHEN** the Attack action is pressed
+- **WHEN** an action button assigned to the Sword is pressed
 - **THEN** the player transitions to `PlayerAttacking` state
-- **AND** the `"Sword"` animation plays on the animated sprite.
+- **AND** the configured attack animation plays on the animated sprite.
+
 
 ### Requirement: Directional Hitbox Synchronization
 The system SHALL synchronize the attack `Hitbox` activation window and physical offset with the active frames and facing orientation of the `"Sword"` animation.
