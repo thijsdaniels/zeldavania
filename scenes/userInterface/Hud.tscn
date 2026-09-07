@@ -3,11 +3,13 @@
 [ext_resource type="Script" uid="uid://dpkjy2ynkhfyk" path="res://scripts/userInterface/Hud.cs" id="1_hud"]
 [ext_resource type="Script" uid="uid://c3i2xuvx0x7tb" path="res://scripts/userInterface/HealthBar.cs" id="2_hbar"]
 [ext_resource type="PackedScene" uid="uid://co3g2h7y6k0wn" path="res://scenes/userInterface/ItemActionCluster.tscn" id="3_cluster"]
+[ext_resource type="PackedScene" uid="uid://c6v2n8dialoguebox" path="res://scenes/userInterface/DialogueBox.tscn" id="4_dialogue"]
 
-[node name="Hud" type="CanvasLayer" unique_id=1942190552 node_paths=PackedStringArray("_healthBar", "_actionCluster")]
+[node name="Hud" type="CanvasLayer" unique_id=1942190552 node_paths=PackedStringArray("_healthBar", "_actionCluster", "_dialogueBox")]
 script = ExtResource("1_hud")
 _healthBar = NodePath("MarginContainer/HealthBar")
 _actionCluster = NodePath("RightMargin/ItemActionCluster")
+_dialogueBox = NodePath("DialogueBox")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=810419335]
 offset_right = 40.0
@@ -32,3 +34,6 @@ theme_override_constants/margin_right = 8
 
 [node name="ItemActionCluster" parent="RightMargin" instance=ExtResource("3_cluster")]
 layout_mode = 2
+
+[node name="DialogueBox" parent="." instance=ExtResource("4_dialogue")]
+visible = false

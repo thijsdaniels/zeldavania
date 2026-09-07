@@ -1,6 +1,10 @@
-[gd_scene format=3 uid="uid://b23q1e7yv8klm"]
+[gd_scene load_steps=8 format=3 uid="uid://b23q1e7yv8klm"]
 
 [ext_resource type="Script" uid="uid://ckr2fmx0j8y7e" path="res://scripts/userInterface/InventoryGridSlot.cs" id="1_slot"]
+[ext_resource type="Texture2D" uid="uid://c6v2n8btna" path="res://assets/textures/userInterface/ButtonA.png" id="2_btna"]
+[ext_resource type="Texture2D" uid="uid://c6v2n8btnb" path="res://assets/textures/userInterface/ButtonB.png" id="3_btnb"]
+[ext_resource type="Texture2D" uid="uid://c6v2n8btnx" path="res://assets/textures/userInterface/ButtonX.png" id="4_btnx"]
+[ext_resource type="Texture2D" uid="uid://c6v2n8btny" path="res://assets/textures/userInterface/ButtonY.png" id="5_btny"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slot_bg"]
 bg_color = Color(0.12, 0.12, 0.18, 0.85)
@@ -21,20 +25,14 @@ border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(1, 0.85, 0.2, 1)
+border_color = Color(0.855, 0.949, 0.906, 1)
 corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 anti_aliasing = false
 
-[sub_resource type="LabelSettings" id="LabelSettings_badge"]
-font_size = 8
-font_color = Color(1, 0.9, 0.3, 1)
-outline_size = 2
-outline_color = Color(0, 0, 0, 1)
-
-[node name="InventoryGridSlot" type="Control" node_paths=PackedStringArray("_iconTexture", "_focusPanel", "_assignedBadge")]
+[node name="InventoryGridSlot" type="Control" node_paths=PackedStringArray("_iconTexture", "_focusPanel", "_assignedBadgeIcon")]
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 3
 anchors_preset = 0
@@ -43,7 +41,11 @@ offset_bottom = 28.0
 script = ExtResource("1_slot")
 _iconTexture = NodePath("Panel/Icon")
 _focusPanel = NodePath("FocusPanel")
-_assignedBadge = NodePath("AssignedBadge")
+_assignedBadgeIcon = NodePath("AssignedBadgeIcon")
+_iconA = ExtResource("2_btna")
+_iconB = ExtResource("3_btnb")
+_iconX = ExtResource("4_btnx")
+_iconY = ExtResource("5_btny")
 
 [node name="Panel" type="Panel" parent="."]
 custom_minimum_size = Vector2(24, 24)
@@ -86,7 +88,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_focus")
 
-[node name="AssignedBadge" type="Label" parent="."]
+[node name="AssignedBadgeIcon" type="TextureRect" parent="."]
 visible = false
 layout_mode = 1
 anchors_preset = 3
@@ -94,12 +96,8 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -10.0
-offset_top = -10.0
-offset_right = -1.0
-offset_bottom = 1.0
+offset_left = -11.0
+offset_top = -11.0
 grow_horizontal = 0
 grow_vertical = 0
-text = "X"
-label_settings = SubResource("LabelSettings_badge")
-horizontal_alignment = 2
+stretch_mode = 3

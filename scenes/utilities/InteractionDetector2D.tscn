@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c6v2n8detect"]
+
+[ext_resource type="Script" uid="uid://bkd4p2interactdet" path="res://scripts/utilities/InteractionDetector2D.cs" id="1_detect"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_detector"]
+size = Vector2(16, 16)
+
+[node name="InteractionDetector2D" type="Area2D"]
+collision_layer = 0
+collision_mask = 512
+script = ExtResource("1_detect")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_detector")
+debug_color = Color(0.3, 0.9, 0.3, 0.3)

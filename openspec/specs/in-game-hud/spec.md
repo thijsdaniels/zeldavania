@@ -41,3 +41,13 @@ The HUD SHALL update its visual health display in real time in response to playe
 - **GIVEN** the player takes lethal damage and resets to spawn with full health
 - **WHEN** the health reset signal is emitted
 - **THEN** the health bar in the HUD is fully restored to 100% fill.
+
+### Requirement: In-Game Dialogue Box Display
+The HUD SHALL house a bottom-anchored dialogue box component capable of displaying interactive messages and streaming typewriter text.
+
+#### Scenario: Displaying dialogue in HUD
+- **GIVEN** an active dialogue message is triggered
+- **WHEN** the HUD receives a request to show dialogue
+- **THEN** the dialogue box becomes visible at the bottom of the viewport
+- **AND** reveals text progressively with a button prompt to advance or close.
+

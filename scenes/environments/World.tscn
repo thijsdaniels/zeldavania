@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://ylus1vn82tmk" path="res://scenes/entities/Bat.tscn" id="8_4ntd8"]
 [ext_resource type="PackedScene" uid="uid://cdg3agf57t0qv" path="res://scenes/objects/Torch.tscn" id="8_torch"]
 [ext_resource type="PackedScene" uid="uid://c7t4k8yn1w5pm" path="res://scenes/userInterface/InventoryMenu.tscn" id="9_invmenu"]
+[ext_resource type="PackedScene" uid="uid://cqpvtvsfmhool" path="res://scenes/objects/Signpost.tscn" id="10_signpost"]
 
 [node name="Node2D" type="Node2D" unique_id=1939464797]
 
@@ -78,9 +79,6 @@ tile_set = ExtResource("2_rep4x")
 tile_map_data = PackedByteArray("AAD//wEACwADAAAAAAAOAPv/CwADAAAAAAANAPv/CwADAAAAAAATAPv/CwADAAAAAAAOAAIACwADAAAAAAASAAIACwADAAAAAAAJAAEACwADAAAAAAAAAP7/CwADAAAAAAAKAAIACwADAAAAAAAJAPz/CwADAAAAAADo/wYAAAABAAAAAADp/wYAAAABAAAAAADq/wYAAAACAAAAAADt/wYAAAAAAAAAAADu/wYAAAABAAAAAADv/wYAAAABAAAAAADw/wYAAAABAAAAAADn/wYAAAAAAAAAAADx/wYAAAACAAAAAADb/wQAAAAAAAAAAADc/wQAAAABAAAAAADd/wQAAAABAAAAAADe/wQAAAABAAAAAADf/wQAAAABAAAAAADg/wQAAAACAAAAAADf//L/AAABAAAAAADe//L/AAABAAAAAADd//L/AAABAAAAAADc//L/AAABAAAAAADX//L/AAABAAAAAADW//L/AAABAAAAAADV//L/AAABAAAAAADU//L/AAABAAAAAADo//D/AAABAAAAAADT//L/AAAAAAAAAADn//D/AAAAAAAAAADg//L/AAACAAAAAADp//D/AAACAAAAAADb//L/AAAAAAAAAADY//L/AAACAAAAAAAGAAIAAAABAAAAAAAFAAIAAAABAAAAAAAEAAIAAAAAAAAAAAALAAMAAAAAAAAAAAAMAAMAAAABAAAAAAANAAMAAAACAAAAAAAgAPz/AAACAAAAAAAfAPz/AAABAAAAAAAeAPz/AAABAAAAAAAdAPz/AAABAAAAAAAcAPz/AAABAAAAAAAbAPz/AAABAAAAAAAaAPz/AAAAAAAAAAAUAPz/AAABAAAAAAATAPz/AAABAAAAAAASAPz/AAABAAAAAAARAPz/AAABAAAAAAAQAPz/AAABAAAAAAAPAPz/AAABAAAAAAAOAPz/AAABAAAAAAANAPz/AAAAAAAAAAAVAPz/AAACAAAAAAAXAPr/AAACAAAAAAAWAPr/AAABAAAAAAAVAPr/AAABAAAAAAAUAPr/AAABAAAAAAATAPr/AAABAAAAAAASAPr/AAAAAAAAAAAXAPb/AAAAAAAAAAAYAPb/AAABAAAAAAAZAPb/AAABAAAAAAAaAPb/AAACAAAAAAAWAPj/AAACAAAAAAAVAPj/AAAAAAAAAAABAAIAAAACAAAAAAAAAAIAAAABAAAAAAD//wIAAAABAAAAAAD+/wIAAAABAAAAAAD9/wIAAAABAAAAAAD8/wIAAAAAAAAAAAAHAAIAAAABAAAAAAAIAAIAAAABAAAAAAAJAAIAAAACAAAAAAD+////AAAAAAAAAAD/////AAABAAAAAAAAAP//AAABAAAAAAABAP//AAACAAAAAAAAAAEAAAAAAAAAAAABAAEAAAABAAAAAAACAAEAAAABAAAAAAADAAEAAAACAAAAAAA=")
 tile_set = ExtResource("2_rep4x")
 
-[node name="Player" parent="." unique_id=1451007581 instance=ExtResource("4_xidib")]
-position = Vector2(0, -16)
-
 [node name="Goblin" parent="." unique_id=1969315279 instance=ExtResource("5_2nnh2")]
 position = Vector2(-336, 64)
 
@@ -102,6 +100,12 @@ position = Vector2(75, -48)
 [node name="Torch4" parent="." unique_id=1898601528 instance=ExtResource("8_torch")]
 position = Vector2(104, 192)
 
+[node name="Signpost" parent="." unique_id=1855294003 instance=ExtResource("10_signpost")]
+position = Vector2(14, -16)
+Message = "Welcome to the Lost Ruins.
+Press (X) to slash your sword, (B) to aim and fire arrows.
+Press (Select / Tab) to manage your inventory."
+
 [node name="Hud" parent="." unique_id=1801539227 node_paths=PackedStringArray("_playerDamageable", "_playerInventory") instance=ExtResource("7_hud")]
 _playerDamageable = NodePath("../Player/Damageable")
 _playerInventory = NodePath("../Player/Inventory")
@@ -114,3 +118,6 @@ visible = false
 [node name="InventoryMenu" parent="CanvasLayer" unique_id=1942871650 node_paths=PackedStringArray("_inventory") instance=ExtResource("9_invmenu")]
 visible = false
 _inventory = NodePath("../../Player/Inventory")
+
+[node name="Player" parent="." unique_id=1451007581 instance=ExtResource("4_xidib")]
+position = Vector2(-14, -16)

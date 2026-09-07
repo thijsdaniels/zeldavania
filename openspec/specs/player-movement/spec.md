@@ -89,3 +89,14 @@ The system SHALL support transitioning from standard movement states to `PlayerA
 - **WHEN** the Attack action (`Controller.X`) is just pressed
 - **THEN** the state machine transitions immediately to `PlayerAttacking`.
 
+### Requirement: Environmental Interaction State Transitions
+The system SHALL support transitioning from `PlayerStanding` to `PlayerInteracting` when interacting with an in-world object.
+
+#### Scenario: Interacting with an object from standing
+- **GIVEN** the player is in `PlayerStanding` state
+- **AND** the player's interaction detector overlaps an active `Interactable2D`
+- **WHEN** the Interact action (`Controller.A`) is just pressed
+- **THEN** the state machine transitions immediately to `PlayerInteracting`
+- **AND** player movement is locked until the interaction concludes.
+
+

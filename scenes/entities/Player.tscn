@@ -32,6 +32,8 @@
 [ext_resource type="Script" path="res://scripts/inventory/BowItem.cs" id="31_bow01"]
 [ext_resource type="Texture2D" path="res://assets/textures/objects/items/Sword.png" id="32_texswd"]
 [ext_resource type="Texture2D" path="res://assets/textures/objects/items/Bow.png" id="33_texbow"]
+[ext_resource type="PackedScene" uid="uid://c6v2n8detect" path="res://scenes/utilities/InteractionDetector2D.tscn" id="34_interactdet"]
+[ext_resource type="Script" path="res://scripts/entities/player/states/PlayerInteracting.cs" id="35_interactstate"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sword_hitbox"]
 size = Vector2(16, 16)
@@ -445,6 +447,9 @@ rotation = -3.14159
 shape = SubResource("RectangleShape2D_o7l1g")
 debug_color = Color(0.886275, 0.290196, 0.411765, 0.419608)
 
+[node name="InteractionDetector2D" parent="." instance=ExtResource("34_interactdet")]
+visible = false
+
 [node name="Crosshair" type="Sprite2D" parent="." unique_id=1293847501]
 visible = false
 texture = ExtResource("28_crs01")
@@ -453,7 +458,7 @@ texture = ExtResource("28_crs01")
 script = ExtResource("2_uv754")
 _state = NodePath("Standing")
 
-[node name="Standing" type="Node" parent="State" unique_id=1162814849 node_paths=PackedStringArray("_body", "_player", "_sprite", "_climbingState", "_ladderDetector", "_fallingState", "_runningState", "_jumpingState")]
+[node name="Standing" type="Node" parent="State" unique_id=1162814849 node_paths=PackedStringArray("_body", "_player", "_sprite", "_climbingState", "_ladderDetector", "_fallingState", "_runningState", "_interactingState", "_interactionDetector", "_jumpingState")]
 script = ExtResource("6_wk3pc")
 _body = NodePath("../..")
 _player = NodePath("../..")
@@ -462,7 +467,15 @@ _climbingState = NodePath("../Climbing")
 _ladderDetector = NodePath("../../LadderDetector2D")
 _fallingState = NodePath("../Falling")
 _runningState = NodePath("../Running")
+_interactingState = NodePath("../Interacting")
+_interactionDetector = NodePath("../../InteractionDetector2D")
 _jumpingState = NodePath("../Jumping")
+
+[node name="Interacting" type="Node" parent="State" node_paths=PackedStringArray("_body", "_sprite", "_standingState")]
+script = ExtResource("35_interactstate")
+_body = NodePath("../..")
+_sprite = NodePath("../../AnimatedSprite2D")
+_standingState = NodePath("../Standing")
 
 [node name="Running" type="Node" parent="State" unique_id=820448027 node_paths=PackedStringArray("_body", "_player", "_sprite", "_standingState", "_fallingState", "_jumpingState", "_climbingState", "_ladderDetector")]
 script = ExtResource("7_iaxy0")

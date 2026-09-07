@@ -15,6 +15,21 @@ public partial class ItemActionSlot : Control
     private Label _buttonLabel;
 
     [Export]
+    private TextureRect _buttonIcon;
+
+    [Export]
+    private Texture2D _iconA;
+
+    [Export]
+    private Texture2D _iconB;
+
+    [Export]
+    private Texture2D _iconX;
+
+    [Export]
+    private Texture2D _iconY;
+
+    [Export]
     private TextureRect _iconTexture;
 
     [Export]
@@ -25,9 +40,27 @@ public partial class ItemActionSlot : Control
 
     public override void _Ready()
     {
+        UpdateSlotBadge();
+    }
+
+    private void UpdateSlotBadge()
+    {
+        if (_buttonIcon != null)
+        {
+            _buttonIcon.Texture = _slot switch
+            {
+                ActionSlot.X => _iconX,
+                ActionSlot.Y => _iconY,
+                ActionSlot.B => _iconB,
+                _ => null
+            };
+            _buttonIcon.Visible = _buttonIcon.Texture != null;
+        }
+
         if (_buttonLabel != null && _slot != ActionSlot.None)
         {
             _buttonLabel.Text = _slot.ToString();
+            _buttonLabel.Visible = _buttonIcon == null || _buttonIcon.Texture == null;
         }
     }
 

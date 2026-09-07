@@ -1,6 +1,10 @@
-[gd_scene format=3 uid="uid://dm0h3w1y62w7k"]
+[gd_scene load_steps=9 format=3 uid="uid://dm0h3w1y62w7k"]
 
 [ext_resource type="Script" uid="uid://b5kx0p8g4q7w8" path="res://scripts/userInterface/ItemActionSlot.cs" id="1_slot"]
+[ext_resource type="Texture2D" uid="uid://c6v2n8btna" path="res://assets/textures/userInterface/ButtonA.png" id="2_btna"]
+[ext_resource type="Texture2D" uid="uid://c6v2n8btnb" path="res://assets/textures/userInterface/ButtonB.png" id="3_btnb"]
+[ext_resource type="Texture2D" uid="uid://c6v2n8btnx" path="res://assets/textures/userInterface/ButtonX.png" id="4_btnx"]
+[ext_resource type="Texture2D" uid="uid://c6v2n8btny" path="res://assets/textures/userInterface/ButtonY.png" id="5_btny"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slot_bg"]
 bg_color = Color(0.08, 0.08, 0.12, 0.7)
@@ -8,7 +12,7 @@ border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.6, 0.55, 0.35, 0.9)
+border_color = Color(0.867, 0.898, 0.898, 0.85)
 corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
@@ -27,7 +31,7 @@ font_color = Color(1, 1, 1, 1)
 outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 
-[node name="ItemActionSlot" type="Control" node_paths=PackedStringArray("_buttonLabel", "_iconTexture", "_ammoLabel", "_ammoContainer")]
+[node name="ItemActionSlot" type="Control" node_paths=PackedStringArray("_buttonLabel", "_buttonIcon", "_iconTexture", "_ammoLabel", "_ammoContainer")]
 custom_minimum_size = Vector2(22, 22)
 layout_mode = 3
 anchors_preset = 0
@@ -35,6 +39,11 @@ offset_right = 22.0
 offset_bottom = 22.0
 script = ExtResource("1_slot")
 _buttonLabel = NodePath("ButtonLabel")
+_buttonIcon = NodePath("ButtonIcon")
+_iconA = ExtResource("2_btna")
+_iconB = ExtResource("3_btnb")
+_iconX = ExtResource("4_btnx")
+_iconY = ExtResource("5_btny")
 _iconTexture = NodePath("Panel/Icon")
 _ammoLabel = NodePath("AmmoContainer/AmmoLabel")
 _ammoContainer = NodePath("AmmoContainer")
@@ -63,7 +72,16 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch_mode = 3
 
+[node name="ButtonIcon" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 8.0
+offset_bottom = 8.0
+stretch_mode = 3
+
 [node name="ButtonLabel" type="Label" parent="."]
+visible = false
 layout_mode = 0
 offset_left = -2.0
 offset_top = -4.0

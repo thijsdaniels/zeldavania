@@ -19,6 +19,21 @@ public partial class Hud : CanvasLayer
     [Export]
     private ItemActionCluster _actionCluster;
 
+    [Export]
+    private DialogueBox _dialogueBox;
+
+    public DialogueBox DialogueBox => _dialogueBox;
+
+    public void ShowDialogue(string message, System.Action onClosed = null)
+    {
+        _dialogueBox?.Open(message, onClosed);
+    }
+
+    public void CloseDialogue()
+    {
+        _dialogueBox?.Close();
+    }
+
     public override void _Ready()
     {
         if (_playerDamageable != null)

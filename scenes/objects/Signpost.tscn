@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cqpvtvsfmhool"]
+
+[ext_resource type="Script" uid="uid://b4kqw6h6y0qps" path="res://scripts/objects/Signpost.cs" id="1_sign"]
+[ext_resource type="Texture2D" uid="uid://cmgj7ngm0wnlr" path="res://assets/textures/objects/Signpost.png" id="2_tex"]
+[ext_resource type="PackedScene" uid="uid://ceoi8fxw8n71c" path="res://scenes/utilities/Interactable2D.tscn" id="3_interact"]
+
+[node name="Signpost" type="Node2D" unique_id=839826065 node_paths=PackedStringArray("_interactable")]
+script = ExtResource("1_sign")
+_interactable = NodePath("Interactable2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=143085208]
+position = Vector2(0, -8)
+texture = ExtResource("2_tex")
+
+[node name="Interactable2D" parent="." unique_id=919452407 instance=ExtResource("3_interact")]
+position = Vector2(0, -8)

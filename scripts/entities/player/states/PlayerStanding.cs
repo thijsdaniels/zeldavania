@@ -27,6 +27,13 @@ public partial class PlayerStanding : State
     [Export]
     private State _runningState;
 
+    [ExportGroup("Interacting")]
+    [Export]
+    private State _interactingState;
+
+    [Export]
+    private Zeldavania.Utilities.InteractionDetector2D _interactionDetector;
+
     [ExportGroup("Jumping")]
     [Export]
     private State _jumpingState;
@@ -54,6 +61,17 @@ public partial class PlayerStanding : State
 
             case true when this.TryTriggerItemAction(_player, out State targetState):
                 Transition(targetState);
+                break;
+
+            case true
+                when _interactionDetector != null
+                    && _interactionDetector.CanInteract
+                    && Input.IsActionJustPressed(Controller.A):
+                _interactionDetector.TriggerInteraction();
+                if (_interactingState != null)
+                {
+                    Transition(_interactingState);
+                }
                 break;
 
             case true when Controller.GetHorizontalDirection() != 0:
