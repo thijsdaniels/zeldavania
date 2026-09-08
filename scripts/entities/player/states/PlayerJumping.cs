@@ -20,6 +20,11 @@ public partial class PlayerJumping : State
     {
         Jump();
 
+        if (_fallingState is PlayerFalling fallingState)
+        {
+            fallingState.NotifyJumpAscent();
+        }
+
         Transition(_fallingState);
     }
 

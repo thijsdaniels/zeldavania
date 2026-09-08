@@ -501,11 +501,12 @@ _jumpingState = NodePath("../Jumping")
 _climbingState = NodePath("../Climbing")
 _ladderDetector = NodePath("../../LadderDetector2D")
 
-[node name="Falling" type="Node" parent="State" unique_id=808392090 node_paths=PackedStringArray("_body", "_player", "_sprite", "_airJumpingState", "_landingState", "_wallSlidingState", "_swimmingState", "_waterDetector", "_climbingState", "_ladderDetector")]
+[node name="Falling" type="Node" parent="State" unique_id=808392090 node_paths=PackedStringArray("_body", "_player", "_sprite", "_jumpingState", "_airJumpingState", "_landingState", "_wallSlidingState", "_swimmingState", "_waterDetector", "_climbingState", "_ladderDetector")]
 script = ExtResource("8_032je")
 _body = NodePath("../..")
 _player = NodePath("../..")
 _sprite = NodePath("../../AnimatedSprite2D")
+_jumpingState = NodePath("../Jumping")
 _airJumpingState = NodePath("../AirJumping")
 _landingState = NodePath("../Landing")
 _wallSlidingState = NodePath("../WallSliding")

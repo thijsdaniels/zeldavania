@@ -56,6 +56,10 @@ public partial class PlayerStanding : State
         switch (true)
         {
             case true when !_body.IsOnFloor():
+                if (_fallingState is PlayerFalling fallingState)
+                {
+                    fallingState.EnableCoyoteTime();
+                }
                 Transition(_fallingState);
                 break;
 

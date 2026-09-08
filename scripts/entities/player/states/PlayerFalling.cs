@@ -29,6 +29,19 @@ public partial class PlayerFalling : State
     [Export]
     private float _maximumVelocity = 70;
 
+    [ExportGroup("Jumping & Aerial Tuning")]
+    [Export]
+    private State _jumpingState;
+
+    [Export]
+    private float _coyoteTime = 0.10f;
+
+    [Export]
+    private float _jumpBufferTime = 0.10f;
+
+    [Export]
+    private float _jumpCutMultiplier = 0.5f;
+
     [ExportGroup("Air Jumping")]
     [Export]
     private State _airJumpingState;
@@ -62,11 +75,25 @@ public partial class PlayerFalling : State
     private float _dropGraceTimer;
     private float _inputLockoutTimer;
     private float _lockedDirection;
+    private float _coyoteTimer;
+    private float _jumpBufferTimer;
+    private bool _isAscendingFromJump;
 
     public void SetInputLockout(float duration, float lockedDirection)
     {
         _inputLockoutTimer = duration;
         _lockedDirection = lockedDirection;
+    }
+
+    public void EnableCoyoteTime()
+    {
+        _coyoteTimer = _coyoteTime;
+    }
+
+    public void NotifyJumpAscent()
+    {
+        _isAscendingFromJump = true;
+        _coyoteTimer = 0f;
     }
 
     public override void _Ready()
@@ -92,6 +119,7 @@ public partial class PlayerFalling : State
     {
         _dropGraceTimer = 0;
         _inputLockoutTimer = 0;
+        _isAscendingFromJump = false;
         _body.SetCollisionMaskValue(2, true);
     }
 
@@ -100,6 +128,29 @@ public partial class PlayerFalling : State
         if (_dropGraceTimer > 0)
         {
             _dropGraceTimer -= (float)delta;
+        }
+
+        if (_coyoteTimer > 0)
+        {
+            _coyoteTimer -= (float)delta;
+        }
+
+        if (_jumpBufferTimer > 0)
+        {
+            _jumpBufferTimer -= (float)delta;
+        }
+
+        if (_isAscendingFromJump && _body.Velocity.Y < 0)
+        {
+            if (Input.IsActionJustReleased(Controller.A) || !Input.IsActionPressed(Controller.A))
+            {
+                _body.Velocity = new Vector2(_body.Velocity.X, _body.Velocity.Y * _jumpCutMultiplier);
+                _isAscendingFromJump = false;
+            }
+        }
+        else if (_body.Velocity.Y >= 0)
+        {
+            _isAscendingFromJump = false;
         }
 
         bool ignorePlatforms = Input.IsActionPressed(Controller.Down) || _dropGraceTimer > 0;
@@ -112,15 +163,36 @@ public partial class PlayerFalling : State
                 break;
 
             case true
+                when _jumpingState != null
+                    && _coyoteTimer > 0
+                    && Input.IsActionJustPressed(Controller.A):
+                _coyoteTimer = 0;
+                Transition(_jumpingState);
+                break;
+
+            case true
                 when Input.IsActionJustPressed(Controller.A)
                     && _airJumpsRemaining > 0:
                 _airJumpsRemaining--;
                 Transition(_airJumpingState);
                 break;
 
+            case true when Input.IsActionJustPressed(Controller.A):
+                _jumpBufferTimer = _jumpBufferTime;
+                break;
+
             case true when _body.IsOnFloor():
                 _airJumpsRemaining = _airJumps;
-                Transition(_landingState);
+                _coyoteTimer = 0;
+                if (_jumpBufferTimer > 0 && _jumpingState != null)
+                {
+                    _jumpBufferTimer = 0;
+                    Transition(_jumpingState);
+                }
+                else
+                {
+                    Transition(_landingState);
+                }
                 break;
 
             case true when _wallSlidingState != null
@@ -128,10 +200,12 @@ public partial class PlayerFalling : State
                 && _body.Velocity.Y >= 0
                 && (_body.GetWallNormal().X * Controller.GetHorizontalDirection()) < 0:
                 _airJumpsRemaining = _airJumps;
+                _coyoteTimer = 0;
                 Transition(_wallSlidingState);
                 break;
 
             case true when _waterDetector.IsOverlapping:
+                _coyoteTimer = 0;
                 Transition(_swimmingState);
                 break;
 
@@ -141,6 +215,7 @@ public partial class PlayerFalling : State
                         Input.IsActionPressed(Controller.Up)
                         || Input.IsActionPressed(Controller.Down)
                     ):
+                _coyoteTimer = 0;
                 Transition(_climbingState);
                 break;
 
