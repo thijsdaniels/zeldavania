@@ -11,7 +11,7 @@ description: When writing commit messages, making commits, managing branches, or
 ## 2. Conventional Commits
 When writing commit messages, use the Conventional Commits format:
 - Short, imperative summary line (e.g. `feat(combat): implement player bow and arrow item system`).
-- Concise body explaining non-obvious details and rationale.
+- Concise body written as a single continuous sentence or prose paragraph explaining non-obvious details and rationale (do **not** use bullet points, lists, or itemized dashes).
 - Optional footer referencing issues:
   - Reference without closing: `Refs: #<issue-number>`
   - Automatically close on merge: `Closes: #<issue-number>`
@@ -20,7 +20,7 @@ When writing commit messages, use the Conventional Commits format:
 ```
 feat(combat): add player movement
 
-Added player movement and jumping mechanics.
+Implement grounded inertia acceleration, aerial physics, and jump state transitions to establish responsive 2D platforming controls.
 
 Refs: #1
 ```

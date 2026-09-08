@@ -34,6 +34,10 @@
 [ext_resource type="Texture2D" path="res://assets/textures/objects/items/Bow.png" id="33_texbow"]
 [ext_resource type="PackedScene" uid="uid://c6v2n8detect" path="res://scenes/utilities/InteractionDetector2D.tscn" id="34_interactdet"]
 [ext_resource type="Script" path="res://scripts/entities/player/states/PlayerInteracting.cs" id="35_interactstate"]
+[ext_resource type="Texture2D" path="res://assets/textures/characters/ZackWallSlide.png" id="36_texwallslide"]
+[ext_resource type="Script" path="res://scripts/entities/player/states/PlayerWallSliding.cs" id="37_wallslidestate"]
+[ext_resource type="Script" path="res://scripts/entities/player/states/PlayerWallJumping.cs" id="38_walljumpstate"]
+
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sword_hitbox"]
 size = Vector2(16, 16)
@@ -349,7 +353,16 @@ animations = [{
 "loop": 1,
 "name": &"Unmorph",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("36_texwallslide")
+}],
+"loop": 1,
+"name": &"WallSlide",
+"speed": 5.0
 }]
+
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2r1l2"]
 size = Vector2(6, 14)
@@ -488,17 +501,19 @@ _jumpingState = NodePath("../Jumping")
 _climbingState = NodePath("../Climbing")
 _ladderDetector = NodePath("../../LadderDetector2D")
 
-[node name="Falling" type="Node" parent="State" unique_id=808392090 node_paths=PackedStringArray("_body", "_player", "_sprite", "_airJumpingState", "_landingState", "_swimmingState", "_waterDetector", "_climbingState", "_ladderDetector")]
+[node name="Falling" type="Node" parent="State" unique_id=808392090 node_paths=PackedStringArray("_body", "_player", "_sprite", "_airJumpingState", "_landingState", "_wallSlidingState", "_swimmingState", "_waterDetector", "_climbingState", "_ladderDetector")]
 script = ExtResource("8_032je")
 _body = NodePath("../..")
 _player = NodePath("../..")
 _sprite = NodePath("../../AnimatedSprite2D")
 _airJumpingState = NodePath("../AirJumping")
 _landingState = NodePath("../Landing")
+_wallSlidingState = NodePath("../WallSliding")
 _swimmingState = NodePath("../Swimming")
 _waterDetector = NodePath("../../WaterDetector2D")
 _climbingState = NodePath("../Climbing")
 _ladderDetector = NodePath("../../LadderDetector2D")
+
 
 [node name="Attacking" type="Node" parent="State" unique_id=1849201948 node_paths=PackedStringArray("_body", "_sprite", "_hitbox", "_hitboxShape", "_soundEffect", "_standingState", "_runningState", "_fallingState")]
 script = ExtResource("23_atk01")
@@ -577,6 +592,24 @@ _sprite = NodePath("../../AnimatedSprite2D")
 _soundEffect = NodePath("../../SoundEffects/PlayerHitEffect")
 _standingState = NodePath("../Standing")
 _fallingState = NodePath("../Falling")
+
+[node name="WallSliding" type="Node" parent="State" unique_id=1530951932 node_paths=PackedStringArray("_body", "_player", "_sprite", "_fallingState", "_landingState", "_wallJumpingState")]
+script = ExtResource("37_wallslidestate")
+_body = NodePath("../..")
+_player = NodePath("../..")
+_sprite = NodePath("../../AnimatedSprite2D")
+_fallingState = NodePath("../Falling")
+_landingState = NodePath("../Landing")
+_wallJumpingState = NodePath("../WallJumping")
+
+[node name="WallJumping" type="Node" parent="State" unique_id=1530951933 node_paths=PackedStringArray("_body", "_player", "_sprite", "_soundEffect", "_fallingState")]
+script = ExtResource("38_walljumpstate")
+_body = NodePath("../..")
+_player = NodePath("../..")
+_sprite = NodePath("../../AnimatedSprite2D")
+_soundEffect = NodePath("../../SoundEffects/PlayerJumpEffect")
+_fallingState = NodePath("../Falling")
+
 
 [node name="SoundEffects" type="Node2D" parent="." unique_id=1813234327]
 

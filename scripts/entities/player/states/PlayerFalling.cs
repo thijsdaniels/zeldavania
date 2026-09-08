@@ -40,6 +40,10 @@ public partial class PlayerFalling : State
     [Export]
     private State _landingState;
 
+    [ExportGroup("Wall Sliding")]
+    [Export]
+    private State _wallSlidingState;
+
     [ExportGroup("Swimming")]
     [Export]
     private State _swimmingState;
@@ -56,6 +60,14 @@ public partial class PlayerFalling : State
 
     private int _airJumpsRemaining;
     private float _dropGraceTimer;
+    private float _inputLockoutTimer;
+    private float _lockedDirection;
+
+    public void SetInputLockout(float duration, float lockedDirection)
+    {
+        _inputLockoutTimer = duration;
+        _lockedDirection = lockedDirection;
+    }
 
     public override void _Ready()
     {
@@ -79,6 +91,7 @@ public partial class PlayerFalling : State
     public override void Exit()
     {
         _dropGraceTimer = 0;
+        _inputLockoutTimer = 0;
         _body.SetCollisionMaskValue(2, true);
     }
 
@@ -108,6 +121,14 @@ public partial class PlayerFalling : State
             case true when _body.IsOnFloor():
                 _airJumpsRemaining = _airJumps;
                 Transition(_landingState);
+                break;
+
+            case true when _wallSlidingState != null
+                && _body.IsOnWall()
+                && _body.Velocity.Y >= 0
+                && (_body.GetWallNormal().X * Controller.GetHorizontalDirection()) < 0:
+                _airJumpsRemaining = _airJumps;
+                Transition(_wallSlidingState);
                 break;
 
             case true when _waterDetector.IsOverlapping:
@@ -149,6 +170,15 @@ public partial class PlayerFalling : State
     {
         float direction = Controller.GetHorizontalDirection();
 
+        if (_inputLockoutTimer > 0)
+        {
+            _inputLockoutTimer -= (float)delta;
+            if (Mathf.Sign(direction) == Mathf.Sign(_lockedDirection))
+            {
+                direction = 0;
+            }
+        }
+
         _body.MoveWithInertia(
             direction: direction,
             acceleration: _acceleration * (float)delta,
@@ -158,4 +188,5 @@ public partial class PlayerFalling : State
 
         _sprite.SynchronizeAnimation(-direction);
     }
+
 }
