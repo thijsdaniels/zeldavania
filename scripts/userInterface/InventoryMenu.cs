@@ -76,6 +76,11 @@ public partial class InventoryMenu : Control
             MoveFocus(_columns);
             GetViewport().SetInputAsHandled();
         }
+        else if (@event.IsActionPressed(Controller.A) || @event.IsActionPressed("ui_accept"))
+        {
+            ToggleOrCycleFocusedItem();
+            GetViewport().SetInputAsHandled();
+        }
         else if (@event.IsActionPressed(Controller.X))
         {
             AssignFocusedItemToSlot(ActionSlot.X);
@@ -131,14 +136,14 @@ public partial class InventoryMenu : Control
         }
         _spawnedSlots.Clear();
 
-        var items = _inventory?.GetUnlockedItems();
+        var items = _inventory?.GetAllItems();
         _focusedIndex = Mathf.Clamp(_focusedIndex, 0, _totalSlots - 1);
 
         for (int i = 0; i < _totalSlots; i++)
         {
-            EquipmentItem item = (items != null && i < items.Count) ? items[i] : null;
-            ActionSlot assignedSlot = (_inventory != null && item != null)
-                ? _inventory.GetSlotOfItem(item)
+            IInventoryItem item = (items != null && i < items.Count) ? items[i] : null;
+            ActionSlot assignedSlot = (_inventory != null && item is EquipmentItem eqItem)
+                ? _inventory.GetSlotOfItem(eqItem)
                 : ActionSlot.None;
             bool isFocused = i == _focusedIndex;
 
@@ -173,13 +178,31 @@ public partial class InventoryMenu : Control
         }
     }
 
+    private void ToggleOrCycleFocusedItem()
+    {
+        if (_inventory == null || _focusedIndex < 0 || _focusedIndex >= _spawnedSlots.Count)
+            return;
+
+        var item = _spawnedSlots[_focusedIndex].Item;
+        if (item != null)
+        {
+            item.CycleTier();
+            if (item is EquipmentItem eqItem && (!eqItem.IsUnlocked || eqItem.Tier <= 0))
+            {
+                _inventory.UnassignItem(eqItem);
+            }
+            UpdateSlotVisuals();
+            UpdateDetailsBanner();
+        }
+    }
+
     private void UpdateSlotVisuals()
     {
         for (int i = 0; i < _spawnedSlots.Count; i++)
         {
             var slot = _spawnedSlots[i];
-            ActionSlot assignedSlot = (_inventory != null && slot.Item != null)
-                ? _inventory.GetSlotOfItem(slot.Item)
+            ActionSlot assignedSlot = (_inventory != null && slot.Item is EquipmentItem eqItem)
+                ? _inventory.GetSlotOfItem(eqItem)
                 : ActionSlot.None;
             slot.SetData(slot.Item, assignedSlot, i == _focusedIndex);
         }
@@ -193,9 +216,9 @@ public partial class InventoryMenu : Control
             if (item != null)
             {
                 if (_itemNameLabel != null)
-                    _itemNameLabel.Text = item.ItemName;
+                    _itemNameLabel.Text = item.DisplayName;
                 if (_itemDescriptionLabel != null)
-                    _itemDescriptionLabel.Text = item.Description;
+                    _itemDescriptionLabel.Text = item.DisplayDescription;
                 return;
             }
         }
@@ -212,9 +235,9 @@ public partial class InventoryMenu : Control
             return;
 
         var item = _spawnedSlots[_focusedIndex].Item;
-        if (item != null)
+        if (item is EquipmentItem eqItem && eqItem.IsUnlocked && eqItem.Tier > 0)
         {
-            _inventory.AssignItemToSlot(slot, item);
+            _inventory.AssignItemToSlot(slot, eqItem);
             UpdateSlotVisuals();
         }
     }

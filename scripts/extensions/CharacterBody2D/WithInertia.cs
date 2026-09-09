@@ -59,18 +59,30 @@ public static class WithInertia
     {
         Vector2 normalizedDirection = direction.Normalized();
 
-        body.Velocity = new Vector2(
-            Mathf.MoveToward(
-                body.Velocity.X,
-                limit.X * normalizedDirection.X,
-                acceleration.X
-            ),
-            Mathf.MoveToward(
-                body.Velocity.Y,
-                limit.Y * normalizedDirection.Y,
-                acceleration.Y
-            )
-        );
+        float targetX = limit.X * normalizedDirection.X;
+        float newX = body.Velocity.X;
+        if (targetX != 0 && Mathf.Sign(body.Velocity.X) == Mathf.Sign(targetX) && Mathf.Abs(body.Velocity.X) > Mathf.Abs(targetX))
+        {
+            // Already exceeding target speed in the input direction; do not brake/clamp!
+            newX = body.Velocity.X;
+        }
+        else
+        {
+            newX = Mathf.MoveToward(body.Velocity.X, targetX, acceleration.X);
+        }
+
+        float targetY = limit.Y * normalizedDirection.Y;
+        float newY = body.Velocity.Y;
+        if (targetY != 0 && Mathf.Sign(body.Velocity.Y) == Mathf.Sign(targetY) && Mathf.Abs(body.Velocity.Y) > Mathf.Abs(targetY))
+        {
+            newY = body.Velocity.Y;
+        }
+        else
+        {
+            newY = Mathf.MoveToward(body.Velocity.Y, targetY, acceleration.Y);
+        }
+
+        body.Velocity = new Vector2(newX, newY);
     }
 
     public static void Accelerate(

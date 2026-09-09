@@ -32,7 +32,13 @@ corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 anti_aliasing = false
 
-[node name="InventoryGridSlot" type="Control" node_paths=PackedStringArray("_iconTexture", "_focusPanel", "_assignedBadgeIcon")]
+[sub_resource type="LabelSettings" id="LabelSettings_tier"]
+font_size = 7
+font_color = Color(1, 0.88, 0.4, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[node name="InventoryGridSlot" type="Control" node_paths=PackedStringArray("_iconTexture", "_focusPanel", "_assignedBadgeIcon", "_tierBadge")]
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 3
 anchors_preset = 0
@@ -42,6 +48,7 @@ script = ExtResource("1_slot")
 _iconTexture = NodePath("Panel/Icon")
 _focusPanel = NodePath("FocusPanel")
 _assignedBadgeIcon = NodePath("AssignedBadgeIcon")
+_tierBadge = NodePath("TierBadge")
 _iconA = ExtResource("2_btna")
 _iconB = ExtResource("3_btnb")
 _iconX = ExtResource("4_btnx")
@@ -101,3 +108,18 @@ offset_top = -11.0
 grow_horizontal = 0
 grow_vertical = 0
 stretch_mode = 3
+
+[node name="TierBadge" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -12.0
+offset_top = 1.0
+offset_right = -2.0
+offset_bottom = 11.0
+grow_horizontal = 0
+text = "II"
+label_settings = SubResource("LabelSettings_tier")
+horizontal_alignment = 2

@@ -32,6 +32,12 @@ public partial class PlayerWallSliding : State
     [Export]
     private State _wallJumpingState;
 
+    [Export]
+    private State _swimmingState;
+
+    [Export]
+    private WaterDetector2D _waterDetector;
+
     private float _coyoteTimer;
     private float _wallNormalX;
 
@@ -75,6 +81,10 @@ public partial class PlayerWallSliding : State
                     wallJumping.SetWallNormal(_wallNormalX);
                 }
                 Transition(_wallJumpingState);
+                break;
+
+            case true when _waterDetector != null && _waterDetector.IsOverlapping:
+                Transition(_swimmingState);
                 break;
 
             case true when _body.IsOnFloor():

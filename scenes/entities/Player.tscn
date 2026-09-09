@@ -37,6 +37,13 @@
 [ext_resource type="Texture2D" path="res://assets/textures/characters/ZackWallSlide.png" id="36_texwallslide"]
 [ext_resource type="Script" path="res://scripts/entities/player/states/PlayerWallSliding.cs" id="37_wallslidestate"]
 [ext_resource type="Script" path="res://scripts/entities/player/states/PlayerWallJumping.cs" id="38_walljumpstate"]
+[ext_resource type="Script" path="res://scripts/inventory/PassiveItem.cs" id="39_passive"]
+[ext_resource type="Script" path="res://scripts/entities/player/states/PlayerDiving.cs" id="40_diving"]
+[ext_resource type="PackedScene" uid="uid://c6waterfall_det" path="res://scenes/utilities/WaterfallDetector2D.tscn" id="43_waterfalldet"]
+[ext_resource type="Texture2D" path="res://assets/textures/objects/items/Scale.png" id="44_scale_t1"]
+[ext_resource type="Texture2D" path="res://assets/textures/objects/items/GoldenScale.png" id="45_scale_t2"]
+[ext_resource type="Texture2D" path="res://assets/textures/objects/items/Flippers.png" id="46_scale_t3"]
+[ext_resource type="Texture2D" path="res://assets/textures/objects/items/GoldenFlippers.png" id="47_scale_t4"]
 
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sword_hitbox"]
@@ -371,7 +378,7 @@ size = Vector2(6, 14)
 polygon = PackedVector2Array(-3, -14, -3, 0, 3, 0, 3, -14)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_at2mb"]
-size = Vector2(5, 4)
+size = Vector2(12, 6)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o7l1g"]
 size = Vector2(4, 1)
@@ -451,6 +458,14 @@ position = Vector2(0, -7.5)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_at2mb")
 
+[node name="WaterfallDetector2D" parent="." unique_id=192694119 instance=ExtResource("43_waterfalldet")]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WaterfallDetector2D" unique_id=70495040]
+position = Vector2(0, -7.5)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_at2mb")
+
 [node name="LadderDetector2D" parent="." unique_id=726189200 instance=ExtResource("3_py7m2")]
 visible = false
 
@@ -501,7 +516,7 @@ _jumpingState = NodePath("../Jumping")
 _climbingState = NodePath("../Climbing")
 _ladderDetector = NodePath("../../LadderDetector2D")
 
-[node name="Falling" type="Node" parent="State" unique_id=808392090 node_paths=PackedStringArray("_body", "_player", "_sprite", "_jumpingState", "_airJumpingState", "_landingState", "_wallSlidingState", "_swimmingState", "_waterDetector", "_climbingState", "_ladderDetector")]
+[node name="Falling" type="Node" parent="State" unique_id=808392090 node_paths=PackedStringArray("_body", "_player", "_sprite", "_jumpingState", "_airJumpingState", "_landingState", "_wallSlidingState", "_swimmingState", "_waterDetector", "_waterfallDetector", "_climbingState", "_ladderDetector")]
 script = ExtResource("8_032je")
 _body = NodePath("../..")
 _player = NodePath("../..")
@@ -512,6 +527,7 @@ _landingState = NodePath("../Landing")
 _wallSlidingState = NodePath("../WallSliding")
 _swimmingState = NodePath("../Swimming")
 _waterDetector = NodePath("../../WaterDetector2D")
+_waterfallDetector = NodePath("../../WaterfallDetector2D")
 _climbingState = NodePath("../Climbing")
 _ladderDetector = NodePath("../../LadderDetector2D")
 
@@ -567,13 +583,27 @@ _soundEffect = NodePath("../../SoundEffects/PlayerLandEffect")
 _standingState = NodePath("../Standing")
 _runningState = NodePath("../Running")
 
-[node name="Swimming" type="Node" parent="State" unique_id=347575558 node_paths=PackedStringArray("_body", "_sprite", "_waterDetector", "_splashEffect", "_fallingState")]
+[node name="Swimming" type="Node" parent="State" unique_id=347575558 node_paths=PackedStringArray("_body", "_player", "_sprite", "_waterDetector", "_waterfallDetector", "_splashEffect", "_fallingState", "_divingState")]
 script = ExtResource("11_mv1iq")
 _body = NodePath("../..")
+_player = NodePath("../..")
 _sprite = NodePath("../../AnimatedSprite2D")
 _waterDetector = NodePath("../../WaterDetector2D")
+_waterfallDetector = NodePath("../../WaterfallDetector2D")
 _splashEffect = NodePath("../../SoundEffects/PlayerSplashEffect")
 _fallingState = NodePath("../Falling")
+_divingState = NodePath("../Diving")
+
+[node name="Diving" type="Node" parent="State" unique_id=347575561 node_paths=PackedStringArray("_body", "_player", "_sprite", "_waterDetector", "_waterfallDetector", "_splashEffect", "_fallingState", "_swimmingState")]
+script = ExtResource("40_diving")
+_body = NodePath("../..")
+_player = NodePath("../..")
+_sprite = NodePath("../../AnimatedSprite2D")
+_waterDetector = NodePath("../../WaterDetector2D")
+_waterfallDetector = NodePath("../../WaterfallDetector2D")
+_splashEffect = NodePath("../../SoundEffects/PlayerSplashEffect")
+_fallingState = NodePath("../Falling")
+_swimmingState = NodePath("../Swimming")
 
 [node name="Climbing" type="Node" parent="State" unique_id=1466217757 node_paths=PackedStringArray("_body", "_sprite", "_ladderDetector", "_fallingState", "_jumpingState", "_standingState")]
 script = ExtResource("12_g7a83")
@@ -594,7 +624,7 @@ _soundEffect = NodePath("../../SoundEffects/PlayerHitEffect")
 _standingState = NodePath("../Standing")
 _fallingState = NodePath("../Falling")
 
-[node name="WallSliding" type="Node" parent="State" unique_id=1530951932 node_paths=PackedStringArray("_body", "_player", "_sprite", "_fallingState", "_landingState", "_wallJumpingState")]
+[node name="WallSliding" type="Node" parent="State" unique_id=1530951932 node_paths=PackedStringArray("_body", "_player", "_sprite", "_fallingState", "_landingState", "_wallJumpingState", "_swimmingState", "_waterDetector")]
 script = ExtResource("37_wallslidestate")
 _body = NodePath("../..")
 _player = NodePath("../..")
@@ -602,6 +632,8 @@ _sprite = NodePath("../../AnimatedSprite2D")
 _fallingState = NodePath("../Falling")
 _landingState = NodePath("../Landing")
 _wallJumpingState = NodePath("../WallJumping")
+_swimmingState = NodePath("../Swimming")
+_waterDetector = NodePath("../../WaterDetector2D")
 
 [node name="WallJumping" type="Node" parent="State" unique_id=1530951933 node_paths=PackedStringArray("_body", "_player", "_sprite", "_soundEffect", "_fallingState")]
 script = ExtResource("38_walljumpstate")
@@ -664,4 +696,15 @@ Icon = ExtResource("33_texbow")
 IsConsumable = true
 MaxAmmo = 30
 CurrentAmmo = 30
+
+[node name="Scale" type="Node" parent="Inventory" unique_id=1928374653]
+script = ExtResource("39_passive")
+ItemId = "scale"
+ItemName = "Scale"
+Description = "Allows diving deeper into water and unlocking underwater swimming."
+DefaultIcon = ExtResource("44_scale_t1")
+TierIcons = [ExtResource("44_scale_t1"), ExtResource("45_scale_t2"), ExtResource("46_scale_t3"), ExtResource("47_scale_t4")]
+Tier = 1
+MaxTier = 4
+IsUnlocked = true
 

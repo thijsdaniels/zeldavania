@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6waterfall_det"]
+
+[ext_resource type="Script" path="res://scripts/utilities/WaterfallDetector2D.cs" id="1_dw5qv"]
+
+[node name="WaterfallDetector2D" type="Area2D"]
+collision_layer = 0
+collision_mask = 1024
+script = ExtResource("1_dw5qv")

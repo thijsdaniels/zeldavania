@@ -125,18 +125,59 @@ public partial class Inventory : Node
         EmitSignal(SignalName.AmmoChanged, item, item.CurrentAmmo, item.MaxAmmo);
     }
 
-    public IReadOnlyList<EquipmentItem> GetUnlockedItems()
+    public void UnassignItem(EquipmentItem item)
     {
-        if (_registeredItems.Count == 0)
+        if (item == null)
+            return;
+
+        ActionSlot slot = GetSlotOfItem(item);
+        if (slot != ActionSlot.None)
         {
-            foreach (Node child in GetChildren())
+            SetSlotItem(slot, null);
+            EmitSignal(SignalName.ItemAssigned, (int)slot, (EquipmentItem)null);
+        }
+    }
+
+    public IReadOnlyList<IInventoryItem> GetAllItems()
+    {
+        var allItems = new List<IInventoryItem>();
+        foreach (Node child in GetChildren())
+        {
+            if (child is IInventoryItem item)
             {
-                if (child is EquipmentItem item && !_registeredItems.Contains(item))
-                {
-                    _registeredItems.Add(item);
-                }
+                allItems.Add(item);
             }
         }
-        return _registeredItems;
+        return allItems;
+    }
+
+    public IReadOnlyList<EquipmentItem> GetUnlockedItems()
+    {
+        var unlocked = new List<EquipmentItem>();
+        foreach (Node child in GetChildren())
+        {
+            if (child is EquipmentItem item && item.IsUnlocked)
+            {
+                unlocked.Add(item);
+            }
+        }
+        return unlocked;
+    }
+
+    public int GetPassiveTier(string itemId)
+    {
+        foreach (Node child in GetChildren())
+        {
+            if (child is PassiveItem passive && passive.ItemId == itemId && passive.IsUnlocked)
+            {
+                return passive.Tier;
+            }
+        }
+        return 0;
+    }
+
+    public bool HasPassive(string itemId, int minTier = 1)
+    {
+        return GetPassiveTier(itemId) >= minTier;
     }
 }

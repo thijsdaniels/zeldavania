@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://blr1i0nmkmapx"]
+[gd_scene format=3 uid="uid://blr1i0nmkmapx"]
 
 [ext_resource type="PackedScene" uid="uid://cjwpr0apqprm4" path="res://scenes/objects/MovingPlatform.tscn" id="1_gafto"]
 [ext_resource type="TileSet" uid="uid://bphl3ypo2c3ak" path="res://TileSet.tres" id="1_tctrs"]
@@ -25,27 +25,28 @@ _data = {
 }
 point_count = 10
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" unique_id=1778031135]
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="TileMap" type="TileMap" parent="." unique_id=521772643]
 position = Vector2(2.08165e-12, 2.08165e-12)
 tile_set = ExtResource("1_tctrs")
 format = 2
 layer_0/tile_data = PackedInt32Array(65533, 524290, 0, 65534, 655362, 0, 65535, 655362, 0, 0, 655362, 0, 1, 655362, 0, 2, 720898, 0, 65538, 720898, 2, 65537, 589826, 2, 65536, 589826, 2, 131071, 589826, 2, 131070, 589826, 2, 131069, 524290, 1, 196605, 524290, 3, 196606, 589826, 3, 196607, 589826, 3, 131072, 589826, 3, 131073, 589826, 3, 131074, 720898, 3, 131089, 589826, 3, 65553, 589826, 2, 17, 655362, 0, 131088, 589826, 3, 65552, 589826, 2, 16, 655362, 0, 131087, 589826, 3, 65551, 589826, 2, 15, 655362, 0, 131086, 524290, 3, 65550, 524290, 1, 14, 524290, 0, -196616, 720898, 3, -262152, 720898, 2, -327688, 720898, 0, -196617, 589826, 3, -262153, 589826, 2, -327689, 655362, 0, -196618, 589826, 3, -262154, 589826, 2, -327690, 655362, 0, 131091, 720898, 3, 65555, 720898, 2, 19, 720898, 0, 131090, 589826, 3, 65554, 589826, 2, 18, 655362, 0, -196619, 589826, 3, -262155, 589826, 2, -327691, 655362, 0, -196620, 589826, 3, -262156, 589826, 2, -327692, 655362, 0, -196621, 524290, 3, -262157, 524290, 1, -327693, 524290, 0, -655357, 524290, 3, -655356, 589826, 3, -655355, 589826, 3, -655354, 589826, 3, -655353, 589826, 3, -655352, 720898, 3, -720888, 720898, 2, -720889, 589826, 2, -720890, 589826, 2, -720891, 589826, 2, -720892, 589826, 2, -720893, 524290, 1, -786429, 524290, 0, -786428, 655362, 0, -786427, 655362, 0, -786426, 655362, 0, -786425, 655362, 0, -786424, 720898, 0)
 
-[node name="CharacterBody2D" parent="." instance=ExtResource("2_jl1lc")]
+[node name="CharacterBody2D" parent="." unique_id=314717012 instance=ExtResource("2_jl1lc")]
+position = Vector2(40, 0)
 
-[node name="MovingPlatform1" parent="." instance=ExtResource("1_gafto")]
+[node name="MovingPlatform1" parent="." unique_id=280749533 instance=ExtResource("1_gafto")]
 position = Vector2(40, 2.08165e-12)
 curve = SubResource("Curve2D_jeu80")
 
-[node name="MovingPlatform2" parent="." instance=ExtResource("1_gafto")]
+[node name="MovingPlatform2" parent="." unique_id=973466779 instance=ExtResource("1_gafto")]
 position = Vector2(-40, 0)
 curve = SubResource("Curve2D_pbke1")
 
-[node name="MovingPlatform3" parent="." instance=ExtResource("1_gafto")]
+[node name="MovingPlatform3" parent="." unique_id=357429503 instance=ExtResource("1_gafto")]
 position = Vector2(-32, -80)
 
-[node name="MovingPlatform4" parent="." instance=ExtResource("1_gafto")]
+[node name="MovingPlatform4" parent="." unique_id=2126250583 instance=ExtResource("1_gafto")]
 position = Vector2(176, 0)
 curve = SubResource("Curve2D_heo1a")

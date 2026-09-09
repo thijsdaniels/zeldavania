@@ -19,6 +19,9 @@ public partial class InventoryGridSlot : Control
     private TextureRect _assignedBadgeIcon;
 
     [Export]
+    private Label _tierBadge;
+
+    [Export]
     private Texture2D _iconA;
 
     [Export]
@@ -30,9 +33,9 @@ public partial class InventoryGridSlot : Control
     [Export]
     private Texture2D _iconY;
 
-    public EquipmentItem Item { get; private set; }
+    public IInventoryItem Item { get; private set; }
 
-    public void SetData(EquipmentItem item, ActionSlot assignedSlot, bool isFocused)
+    public void SetData(IInventoryItem item, ActionSlot assignedSlot, bool isFocused)
     {
         Item = item;
 
@@ -40,6 +43,15 @@ public partial class InventoryGridSlot : Control
         {
             _iconTexture.Texture = item?.Icon;
             _iconTexture.Visible = item?.Icon != null;
+
+            if (item != null && (!item.IsUnlocked || item.Tier <= 0))
+            {
+                _iconTexture.Modulate = new Color(0.35f, 0.35f, 0.35f, 0.35f);
+            }
+            else
+            {
+                _iconTexture.Modulate = Colors.White;
+            }
         }
 
         if (_focusPanel != null)
@@ -47,20 +59,47 @@ public partial class InventoryGridSlot : Control
             _focusPanel.Visible = isFocused;
         }
 
+        if (_tierBadge != null)
+        {
+            if (item != null && item.IsUnlocked && item.Tier > 1)
+            {
+                _tierBadge.Visible = true;
+                _tierBadge.Text = item.Tier switch
+                {
+                    2 => "II",
+                    3 => "III",
+                    4 => "IV",
+                    _ => item.Tier.ToString()
+                };
+            }
+            else
+            {
+                _tierBadge.Visible = false;
+            }
+        }
+
+        bool showAssigned = item is EquipmentItem && item.IsUnlocked && item.Tier > 0;
         if (_assignedBadgeIcon != null)
         {
-            _assignedBadgeIcon.Texture = assignedSlot switch
+            if (showAssigned)
             {
-                ActionSlot.X => _iconX,
-                ActionSlot.Y => _iconY,
-                ActionSlot.B => _iconB,
-                _ => null
-            };
-            _assignedBadgeIcon.Visible = _assignedBadgeIcon.Texture != null;
+                _assignedBadgeIcon.Texture = assignedSlot switch
+                {
+                    ActionSlot.X => _iconX,
+                    ActionSlot.Y => _iconY,
+                    ActionSlot.B => _iconB,
+                    _ => null
+                };
+                _assignedBadgeIcon.Visible = _assignedBadgeIcon.Texture != null;
+            }
+            else
+            {
+                _assignedBadgeIcon.Visible = false;
+            }
         }
         else if (_assignedBadge != null)
         {
-            if (assignedSlot != ActionSlot.None)
+            if (showAssigned && assignedSlot != ActionSlot.None)
             {
                 _assignedBadge.Visible = true;
                 _assignedBadge.Text = assignedSlot.ToString();

@@ -20,8 +20,8 @@ config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 
 [display]
 
-window/size/viewport_width=480
-window/size/viewport_height=320
+window/size/viewport_width=384
+window/size/viewport_height=256
 window/size/window_width_override=1920
 window/size/window_height_override=1280
 window/stretch/mode="canvas_items"
@@ -118,6 +118,7 @@ Inventory={
 2d_physics/layer_8="EnemyHurtbox"
 2d_physics/layer_9="Player"
 2d_physics/layer_10="Enemy"
+2d_physics/layer_11="Waterfalls"
 
 [rendering]
 

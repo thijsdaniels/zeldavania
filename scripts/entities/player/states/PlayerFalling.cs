@@ -62,7 +62,10 @@ public partial class PlayerFalling : State
     private State _swimmingState;
 
     [Export]
-    private TileDetector2D _waterDetector;
+    private WaterDetector2D _waterDetector;
+
+    [Export]
+    private WaterfallDetector2D _waterfallDetector;
 
     [ExportGroup("Climbing")]
     [Export]
@@ -204,7 +207,7 @@ public partial class PlayerFalling : State
                 Transition(_wallSlidingState);
                 break;
 
-            case true when _waterDetector.IsOverlapping:
+            case true when _waterDetector != null && _waterDetector.IsOverlapping && _body.Velocity.Y >= 0:
                 _coyoteTimer = 0;
                 Transition(_swimmingState);
                 break;
@@ -264,4 +267,9 @@ public partial class PlayerFalling : State
         _sprite.SynchronizeAnimation(-direction);
     }
 
+    private bool IsInWaterOrCurrent()
+    {
+        return (_waterDetector != null && _waterDetector.IsOverlapping)
+            || (_waterfallDetector != null && _waterfallDetector.IsOverlapping);
+    }
 }
