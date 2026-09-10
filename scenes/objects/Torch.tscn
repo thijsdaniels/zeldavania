@@ -1,7 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://cdg3agf57t0qv"]
+[gd_scene format=3 uid="uid://cdg3agf57t0qv"]
 
 [ext_resource type="Texture2D" uid="uid://cllh8v53gdsnq" path="res://assets/textures/PointLight.webp" id="1_y08rd"]
 [ext_resource type="Texture2D" path="res://assets/textures/objects/Torch.png" id="2_torch"]
+[ext_resource type="Script" path="res://scripts/combat/Flammable2D.cs" id="3_flam"]
+[ext_resource type="Script" path="res://scripts/utilities/LightEmitter2D.cs" id="4_light"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_torch"]
+size = Vector2(12, 14)
 
 [node name="Torch" type="Node2D"]
 
@@ -9,11 +14,39 @@
 texture = ExtResource("2_torch")
 offset = Vector2(0, -16)
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="Flammable2D" type="Area2D" parent="." node_paths=PackedStringArray("_flameVisuals", "_lightEmitter")]
+position = Vector2(0.5, 0)
+collision_layer = 2048
+collision_mask = 2052
+script = ExtResource("3_flam")
+_flameVisuals = NodePath("FlameParticles")
+_lightEmitter = NodePath("../LightEmitter2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Flammable2D"]
+position = Vector2(0, -20)
+shape = SubResource("RectangleShape2D_torch")
+
+[node name="FlameParticles" type="CPUParticles2D" parent="Flammable2D"]
+position = Vector2(0, -22)
+emitting = false
+amount = 14
+lifetime = 0.45
+direction = Vector2(0, -1)
+spread = 25.0
+gravity = Vector2(0, -25)
+initial_velocity_min = 10.0
+initial_velocity_max = 20.0
+scale_amount_min = 1.5
+scale_amount_max = 3.0
+color = Color(1, 0.627451, 0.156863, 1)
+
+[node name="LightEmitter2D" type="PointLight2D" parent="." node_paths=PackedStringArray("_flammable")]
 texture_filter = 2
-position = Vector2(0, -25)
+position = Vector2(0.5, -22)
 color = Color(0.819608, 0.509804, 0.141176, 1)
 energy = 0.6
 shadow_enabled = true
 texture = ExtResource("1_y08rd")
 texture_scale = 0.6
+script = ExtResource("4_light")
+_flammable = NodePath("../Flammable2D")

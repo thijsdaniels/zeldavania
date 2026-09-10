@@ -105,7 +105,11 @@ public partial class PlayerShooting : State
         if (_body.IsOnFloor())
         {
             _body.Velocity = new Vector2(
-                Mathf.MoveToward(_body.Velocity.X, 0, _deceleration * (float)delta),
+                Mathf.MoveToward(
+                    _body.Velocity.X,
+                    0,
+                    _deceleration * (float)delta
+                ),
                 _body.Velocity.Y
             );
         }
@@ -126,7 +130,9 @@ public partial class PlayerShooting : State
     private void SpawnArrow()
     {
         if (_arrowSpawned || _arrowScene == null || _body == null)
+        {
             return;
+        }
 
         _arrowSpawned = true;
 
@@ -146,11 +152,15 @@ public partial class PlayerShooting : State
         var arrowInstance = _arrowScene.Instantiate<Arrow>();
         if (arrowInstance != null)
         {
+            if (_bowItem != null && _bowItem.ActiveVariant == ArrowVariant.Fire)
+            {
+                arrowInstance.Ignite();
+            }
+
             float facingDir = (_sprite != null && _sprite.FlipH) ? -1f : 1f;
-            Vector2 spawnPos = _body.GlobalPosition + new Vector2(
-                _muzzleOffset.X * facingDir,
-                _muzzleOffset.Y
-            );
+            Vector2 spawnPos =
+                _body.GlobalPosition
+                + new Vector2(_muzzleOffset.X * facingDir, _muzzleOffset.Y);
 
             var treeRoot = _body.GetTree().CurrentScene ?? _body.GetParent();
             treeRoot.AddChild(arrowInstance);
@@ -164,7 +174,9 @@ public partial class PlayerShooting : State
     private void HandleAnimationFinished()
     {
         if (!_isActive || _sprite == null || _sprite.Animation != "Shoot")
+        {
             return;
+        }
 
         if (_body.IsOnFloor())
         {

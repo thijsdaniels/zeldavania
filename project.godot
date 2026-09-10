@@ -119,6 +119,7 @@ Inventory={
 2d_physics/layer_9="Player"
 2d_physics/layer_10="Enemy"
 2d_physics/layer_11="Waterfalls"
+2d_physics/layer_12="Flammables"
 
 [rendering]
 

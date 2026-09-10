@@ -22,6 +22,7 @@ public partial class ItemActionCluster : Control
         if (_inventory != null)
         {
             _inventory.ItemAssigned -= HandleItemAssigned;
+            _inventory.ItemUpdated -= HandleItemUpdated;
             _inventory.AmmoChanged -= HandleAmmoChanged;
         }
 
@@ -30,11 +31,10 @@ public partial class ItemActionCluster : Control
         if (_inventory != null)
         {
             _inventory.ItemAssigned += HandleItemAssigned;
+            _inventory.ItemUpdated += HandleItemUpdated;
             _inventory.AmmoChanged += HandleAmmoChanged;
 
-            _slotX?.SetItem(_inventory.GetItemInSlot(ActionSlot.X));
-            _slotY?.SetItem(_inventory.GetItemInSlot(ActionSlot.Y));
-            _slotB?.SetItem(_inventory.GetItemInSlot(ActionSlot.B));
+            RefreshSlots();
         }
     }
 
@@ -43,8 +43,21 @@ public partial class ItemActionCluster : Control
         if (_inventory != null)
         {
             _inventory.ItemAssigned -= HandleItemAssigned;
+            _inventory.ItemUpdated -= HandleItemUpdated;
             _inventory.AmmoChanged -= HandleAmmoChanged;
         }
+    }
+
+    public void RefreshSlots()
+    {
+        if (_inventory == null)
+        {
+            return;
+        }
+
+        _slotX?.SetItem(_inventory.GetItemInSlot(ActionSlot.X));
+        _slotY?.SetItem(_inventory.GetItemInSlot(ActionSlot.Y));
+        _slotB?.SetItem(_inventory.GetItemInSlot(ActionSlot.B));
     }
 
     private void HandleItemAssigned(int slotInt, EquipmentItem item)
@@ -64,16 +77,53 @@ public partial class ItemActionCluster : Control
         }
     }
 
-    private void HandleAmmoChanged(EquipmentItem item, int currentAmmo, int maxAmmo)
+    private void HandleItemUpdated(EquipmentItem item)
     {
         if (_inventory == null || item == null)
+        {
             return;
+        }
 
         if (_inventory.GetItemInSlot(ActionSlot.X) == item)
-            _slotX?.UpdateAmmo(item);
+        {
+            _slotX?.SetItem(item);
+        }
+
         if (_inventory.GetItemInSlot(ActionSlot.Y) == item)
-            _slotY?.UpdateAmmo(item);
+        {
+            _slotY?.SetItem(item);
+        }
+
         if (_inventory.GetItemInSlot(ActionSlot.B) == item)
+        {
+            _slotB?.SetItem(item);
+        }
+    }
+
+    private void HandleAmmoChanged(
+        EquipmentItem item,
+        int currentAmmo,
+        int maxAmmo
+    )
+    {
+        if (_inventory == null || item == null)
+        {
+            return;
+        }
+
+        if (_inventory.GetItemInSlot(ActionSlot.X) == item)
+        {
+            _slotX?.UpdateAmmo(item);
+        }
+
+        if (_inventory.GetItemInSlot(ActionSlot.Y) == item)
+        {
+            _slotY?.UpdateAmmo(item);
+        }
+
+        if (_inventory.GetItemInSlot(ActionSlot.B) == item)
+        {
             _slotB?.UpdateAmmo(item);
+        }
     }
 }

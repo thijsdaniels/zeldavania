@@ -7,10 +7,20 @@ namespace Zeldavania.Inventory;
 public partial class Inventory : Node
 {
     [Signal]
-    public delegate void ItemAssignedEventHandler(int slot, EquipmentItem item);
+    public delegate void ItemAssignedEventHandler(
+        int slot,
+        EquipmentItem item
+    );
 
     [Signal]
-    public delegate void AmmoChangedEventHandler(EquipmentItem item, int currentAmmo, int maxAmmo);
+    public delegate void ItemUpdatedEventHandler(EquipmentItem item);
+
+    [Signal]
+    public delegate void AmmoChangedEventHandler(
+        EquipmentItem item,
+        int currentAmmo,
+        int maxAmmo
+    );
 
     [Export]
     private EquipmentItem _slotXItem;
@@ -31,6 +41,7 @@ public partial class Inventory : Node
             if (child is EquipmentItem item && !_registeredItems.Contains(item))
             {
                 _registeredItems.Add(item);
+                item.ItemChanged += () => HandleItemChanged(item);
             }
         }
     }
@@ -49,14 +60,24 @@ public partial class Inventory : Node
     public ActionSlot GetSlotOfItem(EquipmentItem item)
     {
         if (item == null)
+        {
             return ActionSlot.None;
+        }
 
         if (_slotXItem == item)
+        {
             return ActionSlot.X;
+        }
+
         if (_slotYItem == item)
+        {
             return ActionSlot.Y;
+        }
+
         if (_slotBItem == item)
+        {
             return ActionSlot.B;
+        }
 
         return ActionSlot.None;
     }
@@ -64,18 +85,27 @@ public partial class Inventory : Node
     public void AssignItemToSlot(ActionSlot targetSlot, EquipmentItem item)
     {
         if (targetSlot == ActionSlot.None)
+        {
             return;
+        }
 
         ActionSlot currentSlotOfNewItem = GetSlotOfItem(item);
         EquipmentItem existingItemInTargetSlot = GetItemInSlot(targetSlot);
 
-        if (currentSlotOfNewItem != ActionSlot.None && currentSlotOfNewItem != targetSlot)
+        if (
+            currentSlotOfNewItem != ActionSlot.None
+            && currentSlotOfNewItem != targetSlot
+        )
         {
             // Swap: move existing item to the other slot
             SetSlotItem(currentSlotOfNewItem, existingItemInTargetSlot);
             SetSlotItem(targetSlot, item);
 
-            EmitSignal(SignalName.ItemAssigned, (int)currentSlotOfNewItem, existingItemInTargetSlot);
+            EmitSignal(
+                SignalName.ItemAssigned,
+                (int)currentSlotOfNewItem,
+                existingItemInTargetSlot
+            );
             EmitSignal(SignalName.ItemAssigned, (int)targetSlot, item);
         }
         else
@@ -104,12 +134,19 @@ public partial class Inventory : Node
     public bool ConsumeAmmo(EquipmentItem item, int amount = 1)
     {
         if (item == null || !item.IsConsumable)
+        {
             return true;
+        }
 
         if (item.CurrentAmmo >= amount)
         {
             item.CurrentAmmo -= amount;
-            EmitSignal(SignalName.AmmoChanged, item, item.CurrentAmmo, item.MaxAmmo);
+            EmitSignal(
+                SignalName.AmmoChanged,
+                item,
+                item.CurrentAmmo,
+                item.MaxAmmo
+            );
             return true;
         }
 
@@ -119,16 +156,24 @@ public partial class Inventory : Node
     public void AddAmmo(EquipmentItem item, int amount)
     {
         if (item == null || !item.IsConsumable)
+        {
             return;
+        }
 
-        item.CurrentAmmo = Mathf.Clamp(item.CurrentAmmo + amount, 0, item.MaxAmmo);
+        item.CurrentAmmo = Mathf.Clamp(
+            item.CurrentAmmo + amount,
+            0,
+            item.MaxAmmo
+        );
         EmitSignal(SignalName.AmmoChanged, item, item.CurrentAmmo, item.MaxAmmo);
     }
 
     public void UnassignItem(EquipmentItem item)
     {
         if (item == null)
+        {
             return;
+        }
 
         ActionSlot slot = GetSlotOfItem(item);
         if (slot != ActionSlot.None)
@@ -136,6 +181,34 @@ public partial class Inventory : Node
             SetSlotItem(slot, null);
             EmitSignal(SignalName.ItemAssigned, (int)slot, (EquipmentItem)null);
         }
+    }
+
+    public void NotifyItemUpdated(EquipmentItem item)
+    {
+        HandleItemChanged(item);
+    }
+
+    private void HandleItemChanged(EquipmentItem item)
+    {
+        if (item == null)
+        {
+            return;
+        }
+
+        if (!item.IsUnlocked || item.Tier <= 0)
+        {
+            UnassignItem(item);
+        }
+        else
+        {
+            ActionSlot slot = GetSlotOfItem(item);
+            if (slot != ActionSlot.None)
+            {
+                EmitSignal(SignalName.ItemAssigned, (int)slot, item);
+            }
+        }
+
+        EmitSignal(SignalName.ItemUpdated, item);
     }
 
     public IReadOnlyList<IInventoryItem> GetAllItems()
@@ -168,7 +241,11 @@ public partial class Inventory : Node
     {
         foreach (Node child in GetChildren())
         {
-            if (child is PassiveItem passive && passive.ItemId == itemId && passive.IsUnlocked)
+            if (
+                child is PassiveItem passive
+                && passive.ItemId == itemId
+                && passive.IsUnlocked
+            )
             {
                 return passive.Tier;
             }

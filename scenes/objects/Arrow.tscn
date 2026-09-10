@@ -2,16 +2,25 @@
 
 [ext_resource type="Script" path="res://scripts/objects/Arrow.cs" id="1_arrow"]
 [ext_resource type="Texture2D" path="res://assets/textures/objects/Arrow.png" id="2_texture"]
+[ext_resource type="Script" path="res://scripts/combat/Flammable2D.cs" id="3_flam"]
+[ext_resource type="Texture2D" uid="uid://cllh8v53gdsnq" path="res://assets/textures/PointLight.webp" id="4_pointlight"]
+[ext_resource type="Script" path="res://scripts/utilities/LightEmitter2D.cs" id="5_light"]
+[ext_resource type="PackedScene" uid="uid://bqfrngjwqnade" path="res://scenes/utilities/WaterDetector2D.tscn" id="6_water"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_arrow"]
 size = Vector2(8, 2)
 
-[node name="Arrow" type="Area2D" node_paths=PackedStringArray("_sprite", "_collisionShape")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_fire"]
+radius = 6.0
+
+[node name="Arrow" type="Area2D" node_paths=PackedStringArray("_sprite", "_collisionShape", "_waterDetector")]
+z_index = -1
 collision_layer = 64
 collision_mask = 129
 script = ExtResource("1_arrow")
 _sprite = NodePath("Sprite2D")
 _collisionShape = NodePath("CollisionShape2D")
+_waterDetector = NodePath("WaterDetector2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_texture")
@@ -19,3 +28,48 @@ texture = ExtResource("2_texture")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_arrow")
 
+[node name="WaterDetector2D" parent="." instance=ExtResource("6_water")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WaterDetector2D"]
+shape = SubResource("RectangleShape2D_arrow")
+
+[node name="Flammable2D" type="Area2D" parent="." node_paths=PackedStringArray("_flameVisuals", "_lightEmitter")]
+collision_layer = 2048
+collision_mask = 2052
+script = ExtResource("3_flam")
+IsBurning = false
+_flameVisuals = NodePath("FlameParticles")
+_lightEmitter = NodePath("../LightEmitter2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Flammable2D"]
+position = Vector2(3, 0)
+shape = SubResource("CircleShape2D_fire")
+
+[node name="FlameParticles" type="CPUParticles2D" parent="Flammable2D"]
+position = Vector2(4, 0)
+emitting = false
+amount = 16
+lifetime = 0.25
+speed_scale = 1.2
+emission_shape = 1
+emission_sphere_radius = 2.0
+direction = Vector2(-1, 0)
+spread = 20.0
+gravity = Vector2(0, -15)
+initial_velocity_min = 12.0
+initial_velocity_max = 24.0
+scale_amount_min = 1.2
+scale_amount_max = 2.5
+color = Color(1, 0.55, 0.1, 1)
+
+[node name="LightEmitter2D" type="PointLight2D" parent="." node_paths=PackedStringArray("_flammable")]
+texture_filter = 2
+color = Color(1, 0.55, 0.15, 1)
+energy = 0.5
+shadow_enabled = true
+texture = ExtResource("4_pointlight")
+texture_scale = 0.35
+script = ExtResource("5_light")
+BaseEnergy = 0.5
+RadiusScale = 0.35
+_flammable = NodePath("../Flammable2D")

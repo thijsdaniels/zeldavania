@@ -5,6 +5,9 @@ namespace Zeldavania.Inventory;
 [GlobalClass]
 public partial class EquipmentItem : Node, IInventoryItem
 {
+    [Signal]
+    public delegate void ItemChangedEventHandler();
+
     [Export]
     public string ItemId { get; set; } = "";
 
@@ -15,7 +18,7 @@ public partial class EquipmentItem : Node, IInventoryItem
     public string Description { get; set; } = "";
 
     [Export]
-    public Texture2D Icon { get; set; }
+    public Texture2D DefaultIcon { get; set; }
 
     [Export]
     public int Tier { get; set; } = 1;
@@ -35,9 +38,13 @@ public partial class EquipmentItem : Node, IInventoryItem
     [Export]
     public int CurrentAmmo { get; set; }
 
-    public string DisplayName => (!IsUnlocked || Tier <= 0) ? $"[Locked] {ItemName}" : ItemName;
+    public virtual Texture2D Icon => DefaultIcon;
 
-    public string DisplayDescription => (!IsUnlocked || Tier <= 0) ? "[Locked] Not yet obtained." : Description;
+    public virtual string DisplayName =>
+        (!IsUnlocked || Tier <= 0) ? $"[Locked] {ItemName}" : ItemName;
+
+    public virtual string DisplayDescription =>
+        (!IsUnlocked || Tier <= 0) ? "[Locked] Not yet obtained." : Description;
 
     public virtual State Use(Player player, string actionButton) => null;
 
@@ -47,10 +54,8 @@ public partial class EquipmentItem : Node, IInventoryItem
         {
             IsUnlocked = !IsUnlocked;
             Tier = IsUnlocked ? 1 : 0;
-            return;
         }
-
-        if (!IsUnlocked || Tier <= 0)
+        else if (!IsUnlocked || Tier <= 0)
         {
             IsUnlocked = true;
             Tier = 1;
@@ -64,5 +69,7 @@ public partial class EquipmentItem : Node, IInventoryItem
             IsUnlocked = false;
             Tier = 0;
         }
+
+        EmitSignal(SignalName.ItemChanged);
     }
 }

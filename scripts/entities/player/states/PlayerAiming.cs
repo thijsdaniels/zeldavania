@@ -67,7 +67,7 @@ public partial class PlayerAiming : State
         if (_sprite != null)
         {
             _sprite.Play("Shoot");
-            _sprite.Frame = 2;
+            _sprite.Frame = 1;
             _sprite.Pause();
         }
 

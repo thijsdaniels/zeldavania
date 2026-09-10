@@ -21,36 +21,36 @@
 [ext_resource type="Script" uid="uid://0ocbivbfju3q" path="res://scripts/entities/player/states/PlayerHurt.cs" id="20_hrt03"]
 [ext_resource type="AudioStream" uid="uid://bhsnvg46wegfg" path="res://assets/sounds/effects/playerHit.wav" id="21_hit01"]
 [ext_resource type="AudioStream" uid="uid://b700nvcdyqty7" path="res://assets/sounds/effects/playerDie.wav" id="22_die02"]
-[ext_resource type="Script" path="res://scripts/entities/player/states/PlayerAttacking.cs" id="23_atk01"]
+[ext_resource type="Script" uid="uid://does2wii1hji8" path="res://scripts/entities/player/states/PlayerAttacking.cs" id="23_atk01"]
 [ext_resource type="Script" uid="uid://dox7ulgtgmsqx" path="res://scripts/combat/Hitbox.cs" id="24_hitbox"]
-[ext_resource type="Script" path="res://scripts/entities/player/states/PlayerAiming.cs" id="25_aim01"]
-[ext_resource type="Script" path="res://scripts/entities/player/states/PlayerShooting.cs" id="26_sht01"]
+[ext_resource type="Script" uid="uid://4fk7sffqwi4d" path="res://scripts/entities/player/states/PlayerAiming.cs" id="25_aim01"]
+[ext_resource type="Script" uid="uid://ckkv0t3ng8hkq" path="res://scripts/entities/player/states/PlayerShooting.cs" id="26_sht01"]
 [ext_resource type="PackedScene" uid="uid://cx6q8nve23jkm" path="res://scenes/objects/Arrow.tscn" id="27_arr01"]
-[ext_resource type="Texture2D" path="res://assets/textures/objects/CrosshairSingle.png" id="28_crs01"]
-[ext_resource type="Script" path="res://scripts/inventory/Inventory.cs" id="29_inv01"]
-[ext_resource type="Script" path="res://scripts/inventory/SwordItem.cs" id="30_swd01"]
-[ext_resource type="Script" path="res://scripts/inventory/BowItem.cs" id="31_bow01"]
-[ext_resource type="Texture2D" path="res://assets/textures/objects/items/Sword.png" id="32_texswd"]
-[ext_resource type="Texture2D" path="res://assets/textures/objects/items/Bow.png" id="33_texbow"]
+[ext_resource type="Texture2D" uid="uid://c5wibhqgkuo5s" path="res://assets/textures/objects/CrosshairSingle.png" id="28_crs01"]
+[ext_resource type="Script" uid="uid://cpmttcjo2wudd" path="res://scripts/inventory/Inventory.cs" id="29_inv01"]
+[ext_resource type="Script" uid="uid://dnhdg5ft2fii" path="res://scripts/inventory/SwordItem.cs" id="30_swd01"]
+[ext_resource type="Script" uid="uid://mjy2eoam5ddv" path="res://scripts/inventory/BowItem.cs" id="31_bow01"]
+[ext_resource type="Texture2D" uid="uid://dgb04ahm8gx41" path="res://assets/textures/objects/items/Sword.png" id="32_texswd"]
+[ext_resource type="Texture2D" uid="uid://b0n488bup1ea4" path="res://assets/textures/objects/items/Bow.png" id="33_texbow"]
+[ext_resource type="Texture2D" uid="uid://cfcow1np7bmea" path="res://assets/textures/objects/items/BowFire.png" id="33_texbowfire"]
 [ext_resource type="PackedScene" uid="uid://c6v2n8detect" path="res://scenes/utilities/InteractionDetector2D.tscn" id="34_interactdet"]
-[ext_resource type="Script" path="res://scripts/entities/player/states/PlayerInteracting.cs" id="35_interactstate"]
-[ext_resource type="Texture2D" path="res://assets/textures/characters/ZackWallSlide.png" id="36_texwallslide"]
-[ext_resource type="Script" path="res://scripts/entities/player/states/PlayerWallSliding.cs" id="37_wallslidestate"]
-[ext_resource type="Script" path="res://scripts/entities/player/states/PlayerWallJumping.cs" id="38_walljumpstate"]
-[ext_resource type="Script" path="res://scripts/inventory/PassiveItem.cs" id="39_passive"]
-[ext_resource type="Script" path="res://scripts/entities/player/states/PlayerDiving.cs" id="40_diving"]
-[ext_resource type="PackedScene" uid="uid://c6waterfall_det" path="res://scenes/utilities/WaterfallDetector2D.tscn" id="43_waterfalldet"]
-[ext_resource type="Texture2D" path="res://assets/textures/objects/items/Scale.png" id="44_scale_t1"]
-[ext_resource type="Texture2D" path="res://assets/textures/objects/items/GoldenScale.png" id="45_scale_t2"]
-[ext_resource type="Texture2D" path="res://assets/textures/objects/items/Flippers.png" id="46_scale_t3"]
-[ext_resource type="Texture2D" path="res://assets/textures/objects/items/GoldenFlippers.png" id="47_scale_t4"]
-
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sword_hitbox"]
-size = Vector2(16, 16)
+[ext_resource type="Script" uid="uid://kcw6x51x4sms" path="res://scripts/entities/player/states/PlayerInteracting.cs" id="35_interactstate"]
+[ext_resource type="Texture2D" uid="uid://rdcga4qvdexn" path="res://assets/textures/characters/ZackWallSlide.png" id="36_texwallslide"]
+[ext_resource type="Script" uid="uid://dkkbi5vttygyg" path="res://scripts/entities/player/states/PlayerWallSliding.cs" id="37_wallslidestate"]
+[ext_resource type="Script" uid="uid://htqfpi5gpxu3" path="res://scripts/entities/player/states/PlayerWallJumping.cs" id="38_walljumpstate"]
+[ext_resource type="Script" uid="uid://boo1mo5rtuvns" path="res://scripts/inventory/PassiveItem.cs" id="39_passive"]
+[ext_resource type="Script" uid="uid://daj3xq07a16b2" path="res://scripts/entities/player/states/PlayerDiving.cs" id="40_diving"]
+[ext_resource type="PackedScene" path="res://scenes/utilities/WaterfallDetector2D.tscn" id="43_waterfalldet"]
+[ext_resource type="Texture2D" uid="uid://bfvrn1d17f8la" path="res://assets/textures/objects/items/Scale.png" id="44_scale_t1"]
+[ext_resource type="Texture2D" uid="uid://cky6limfykw5" path="res://assets/textures/objects/items/GoldenScale.png" id="45_scale_t2"]
+[ext_resource type="Texture2D" uid="uid://dbftx8lopr5ic" path="res://assets/textures/objects/items/Flippers.png" id="46_scale_t3"]
+[ext_resource type="Texture2D" uid="uid://j2muadjtd80u" path="res://assets/textures/objects/items/GoldenFlippers.png" id="47_scale_t4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hurtbox_player"]
 size = Vector2(8, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sword_hitbox"]
+size = Vector2(16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_climb_0"]
 atlas = ExtResource("2_tbmxl")
@@ -370,7 +370,6 @@ animations = [{
 "speed": 5.0
 }]
 
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2r1l2"]
 size = Vector2(6, 14)
 
@@ -397,7 +396,6 @@ MaxHitPoints = 12
 CurrentHitPoints = 12
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1786750497 node_paths=PackedStringArray("_damageable")]
-visible = false
 collision_layer = 16
 collision_mask = 32
 script = ExtResource("19_hrt02")
@@ -409,7 +407,6 @@ shape = SubResource("RectangleShape2D_hurtbox_player")
 debug_color = Color(0.9, 0.2, 0.2, 0.42)
 
 [node name="SwordHitbox" type="Area2D" parent="." unique_id=1412093847]
-visible = false
 position = Vector2(10, -7)
 collision_layer = 64
 collision_mask = 128
@@ -421,7 +418,6 @@ disabled = true
 debug_color = Color(0.9, 0.8, 0.1, 0.42)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1619384801]
-visible = false
 position = Vector2(0, -7)
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
@@ -431,7 +427,6 @@ drag_right_margin = 0.1
 editor_draw_drag_margin = true
 
 [node name="AudioListener2D" type="AudioListener2D" parent="." unique_id=1491882365]
-visible = false
 current = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=421332401]
@@ -441,17 +436,14 @@ animation = &"Idle"
 autoplay = "Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2013176981]
-visible = false
 position = Vector2(0, -7)
 shape = SubResource("RectangleShape2D_2r1l2")
 debug_color = Color(0, 0.635294, 0.403922, 0.419608)
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="." unique_id=696262613]
-visible = false
 occluder = SubResource("OccluderPolygon2D_c6tv4")
 
 [node name="WaterDetector2D" parent="." unique_id=192694118 instance=ExtResource("8_jo0ew")]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WaterDetector2D" unique_id=70495039]
 position = Vector2(0, -7.5)
@@ -459,7 +451,6 @@ rotation = 1.5708
 shape = SubResource("RectangleShape2D_at2mb")
 
 [node name="WaterfallDetector2D" parent="." unique_id=192694119 instance=ExtResource("43_waterfalldet")]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WaterfallDetector2D" unique_id=70495040]
 position = Vector2(0, -7.5)
@@ -467,7 +458,6 @@ rotation = 1.5708
 shape = SubResource("RectangleShape2D_at2mb")
 
 [node name="LadderDetector2D" parent="." unique_id=726189200 instance=ExtResource("3_py7m2")]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LadderDetector2D" unique_id=199558419]
 position = Vector2(0, -0.5)
@@ -475,8 +465,7 @@ rotation = -3.14159
 shape = SubResource("RectangleShape2D_o7l1g")
 debug_color = Color(0.886275, 0.290196, 0.411765, 0.419608)
 
-[node name="InteractionDetector2D" parent="." instance=ExtResource("34_interactdet")]
-visible = false
+[node name="InteractionDetector2D" parent="." unique_id=1925020355 instance=ExtResource("34_interactdet")]
 
 [node name="Crosshair" type="Sprite2D" parent="." unique_id=1293847501]
 visible = false
@@ -499,7 +488,7 @@ _interactingState = NodePath("../Interacting")
 _interactionDetector = NodePath("../../InteractionDetector2D")
 _jumpingState = NodePath("../Jumping")
 
-[node name="Interacting" type="Node" parent="State" node_paths=PackedStringArray("_body", "_sprite", "_standingState")]
+[node name="Interacting" type="Node" parent="State" unique_id=90835242 node_paths=PackedStringArray("_body", "_sprite", "_standingState")]
 script = ExtResource("35_interactstate")
 _body = NodePath("../..")
 _sprite = NodePath("../../AnimatedSprite2D")
@@ -531,7 +520,6 @@ _waterfallDetector = NodePath("../../WaterfallDetector2D")
 _climbingState = NodePath("../Climbing")
 _ladderDetector = NodePath("../../LadderDetector2D")
 
-
 [node name="Attacking" type="Node" parent="State" unique_id=1849201948 node_paths=PackedStringArray("_body", "_sprite", "_hitbox", "_hitboxShape", "_soundEffect", "_standingState", "_runningState", "_fallingState")]
 script = ExtResource("23_atk01")
 _body = NodePath("../..")
@@ -543,13 +531,12 @@ _standingState = NodePath("../Standing")
 _runningState = NodePath("../Running")
 _fallingState = NodePath("../Falling")
 
-[node name="Aiming" type="Node" parent="State" unique_id=2099881122 node_paths=PackedStringArray("_body", "_sprite", "_crosshair", "_shootingState", "_bowItem")]
+[node name="Aiming" type="Node" parent="State" unique_id=2099881122 node_paths=PackedStringArray("_body", "_sprite", "_crosshair", "_shootingState")]
 script = ExtResource("25_aim01")
 _body = NodePath("../..")
 _sprite = NodePath("../../AnimatedSprite2D")
 _crosshair = NodePath("../../Crosshair")
 _shootingState = NodePath("../Shooting")
-_bowItem = NodePath("../../Inventory/Bow")
 
 [node name="Shooting" type="Node" parent="State" unique_id=2099881123 node_paths=PackedStringArray("_body", "_sprite", "_bowItem", "_soundEffect", "_standingState", "_runningState", "_fallingState")]
 script = ExtResource("26_sht01")
@@ -561,7 +548,6 @@ _soundEffect = NodePath("../../SoundEffects/PlayerShootEffect")
 _standingState = NodePath("../Standing")
 _runningState = NodePath("../Running")
 _fallingState = NodePath("../Falling")
-
 
 [node name="Jumping" type="Node" parent="State" unique_id=99775687 node_paths=PackedStringArray("_body", "_soundEffect", "_fallingState")]
 script = ExtResource("9_2uq2y")
@@ -643,7 +629,6 @@ _sprite = NodePath("../../AnimatedSprite2D")
 _soundEffect = NodePath("../../SoundEffects/PlayerJumpEffect")
 _fallingState = NodePath("../Falling")
 
-
 [node name="SoundEffects" type="Node2D" parent="." unique_id=1813234327]
 
 [node name="PlayerJumpEffect" type="AudioStreamPlayer2D" parent="SoundEffects" unique_id=813396987]
@@ -684,7 +669,7 @@ _attackState = NodePath("../../State/Attacking")
 ItemId = "sword"
 ItemName = "Kokiri Sword"
 Description = "A trusted blade for close-quarters melee combat."
-Icon = ExtResource("32_texswd")
+DefaultIcon = ExtResource("32_texswd")
 
 [node name="Bow" type="Node" parent="Inventory" unique_id=1928374652 node_paths=PackedStringArray("_aimingState")]
 script = ExtResource("31_bow01")
@@ -692,7 +677,10 @@ _aimingState = NodePath("../../State/Aiming")
 ItemId = "bow"
 ItemName = "Fairy Bow"
 Description = "Fires piercing arrows at distant targets."
-Icon = ExtResource("33_texbow")
+DefaultIcon = ExtResource("33_texbow")
+FireBowIcon = ExtResource("33_texbowfire")
+Tier = 1
+MaxTier = 2
 IsConsumable = true
 MaxAmmo = 30
 CurrentAmmo = 30
@@ -703,8 +691,4 @@ ItemId = "scale"
 ItemName = "Scale"
 Description = "Allows diving deeper into water and unlocking underwater swimming."
 DefaultIcon = ExtResource("44_scale_t1")
-TierIcons = [ExtResource("44_scale_t1"), ExtResource("45_scale_t2"), ExtResource("46_scale_t3"), ExtResource("47_scale_t4")]
-Tier = 1
-MaxTier = 4
-IsUnlocked = true
-
+TierIcons = Array[Texture2D]([ExtResource("44_scale_t1"), ExtResource("45_scale_t2"), ExtResource("46_scale_t3"), ExtResource("47_scale_t4")])
