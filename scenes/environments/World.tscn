@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cdg3agf57t0qv" path="res://scenes/objects/Torch.tscn" id="8_torch"]
 [ext_resource type="PackedScene" uid="uid://c7t4k8yn1w5pm" path="res://scenes/userInterface/InventoryMenu.tscn" id="9_invmenu"]
 [ext_resource type="PackedScene" uid="uid://cqpvtvsfmhool" path="res://scenes/objects/Signpost.tscn" id="10_signpost"]
+[ext_resource type="PackedScene" uid="uid://c7jarobject01" path="res://scenes/objects/Jar.tscn" id="11_jar"]
 
 [node name="Node2D" type="Node2D" unique_id=1939464797]
 
@@ -95,7 +96,7 @@ position = Vector2(416, -128)
 [node name="Bat" parent="." unique_id=324840141 instance=ExtResource("8_4ntd8")]
 position = Vector2(170, -42)
 
-[node name="Torch1" parent="." unique_id=949516270 instance=ExtResource("8_torch")]
+[node name="Torch" parent="." unique_id=949516270 instance=ExtResource("8_torch")]
 position = Vector2(-504, -64)
 
 [node name="Torch2" parent="." unique_id=461625306 instance=ExtResource("8_torch")]
@@ -113,6 +114,15 @@ Message = "Welcome to the Lost Ruins.
 Press (X) to slash your sword, (B) to aim and fire arrows.
 Press (Select / Tab) to manage your inventory."
 
+[node name="Jar" parent="." unique_id=1855294004 instance=ExtResource("11_jar")]
+position = Vector2(157, -48)
+
+[node name="Jar2" parent="." unique_id=1855294005 instance=ExtResource("11_jar")]
+position = Vector2(294, 48)
+
+[node name="Jar3" parent="." unique_id=1855294006 instance=ExtResource("11_jar")]
+position = Vector2(-515, 32)
+
 [node name="Hud" parent="." unique_id=1801539227 node_paths=PackedStringArray("_playerDamageable", "_playerInventory") instance=ExtResource("7_hud")]
 _playerDamageable = NodePath("../Player/Damageable")
 _playerInventory = NodePath("../Player/Inventory")
@@ -128,3 +138,24 @@ _inventory = NodePath("../../Player/Inventory")
 
 [node name="Player" parent="." unique_id=1451007581 instance=ExtResource("4_xidib")]
 position = Vector2(-14, -16)
+
+[node name="Jar4" parent="." unique_id=2017516578 instance=ExtResource("11_jar")]
+position = Vector2(-18, 32)
+
+[node name="Jar5" parent="." unique_id=1397200083 instance=ExtResource("11_jar")]
+position = Vector2(280, 48)
+
+[node name="Jar6" parent="." unique_id=122249430 instance=ExtResource("11_jar")]
+position = Vector2(63, 160)
+
+[node name="Jar7" parent="." unique_id=1888572425 instance=ExtResource("11_jar")]
+position = Vector2(-566, 64)
+
+[node name="Jar8" parent="." unique_id=981947492 instance=ExtResource("11_jar")]
+position = Vector2(-365, 96)
+
+[node name="Jar9" parent="." unique_id=252830748 instance=ExtResource("11_jar")]
+position = Vector2(-223, 32)
+
+[node name="Jar10" parent="." unique_id=1814180422 instance=ExtResource("11_jar")]
+position = Vector2(14, 16)

@@ -15,6 +15,15 @@
 [ext_resource type="Script" uid="uid://cgdh3o50wbtf0" path="res://scripts/combat/Hurtbox.cs" id="12_hrt02"]
 [ext_resource type="Script" uid="uid://cab1hs5n315hj" path="res://scripts/entities/enemy/states/EnemyHurt.cs" id="13_hurt_state"]
 [ext_resource type="AudioStream" uid="uid://bhsnvg46wegfg" path="res://assets/sounds/effects/playerHit.wav" id="14_hit_snd"]
+[ext_resource type="Script" path="res://scripts/combat/Lootable2D.cs" id="15_loot_cs"]
+[ext_resource type="Script" path="res://scripts/combat/LootEntry.cs" id="16_loot_entry_cs"]
+[ext_resource type="PackedScene" uid="uid://cbpgyu4h2mhoa" path="res://scenes/objects/HeartCollectible.tscn" id="17_heart_drop"]
+
+[sub_resource type="Resource" id="Resource_loot_heart"]
+script = ExtResource("16_loot_entry_cs")
+CollectibleScene = ExtResource("17_heart_drop")
+Weight = 10
+
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_klq03"]
 size = Vector2(8, 7)
@@ -401,3 +410,10 @@ wait_time = 10.0
 
 [node name="HitEffect" type="AudioStreamPlayer2D" parent="SoundEffects" unique_id=1983021948]
 stream = ExtResource("14_hit_snd")
+
+[node name="Lootable2D" type="Node2D" parent="." node_paths=PackedStringArray("DamageableNode")]
+position = Vector2(1, -3.5)
+script = ExtResource("15_loot_cs")
+DropTable = Array[ExtResource("16_loot_entry_cs")]([SubResource("Resource_loot_heart")])
+EmptyDropWeight = 90
+DamageableNode = NodePath("../Damageable")

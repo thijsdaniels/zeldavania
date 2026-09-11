@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bt5pogqe2g1ks"]
+
+[ext_resource type="PackedScene" uid="uid://bya065f3tc8mm" path="res://scenes/objects/ArrowCollectible.tscn" id="1_base"]
+
+[node name="ArrowCollectible20" instance=ExtResource("1_base")]
+Amount = 20

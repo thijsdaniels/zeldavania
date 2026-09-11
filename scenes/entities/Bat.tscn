@@ -13,6 +13,15 @@
 [ext_resource type="Script" uid="uid://cab1hs5n315hj" path="res://scripts/entities/enemy/states/EnemyHurt.cs" id="11_hurt_cs"]
 [ext_resource type="Script" uid="uid://dirh2tve8s8mu" path="res://scripts/entities/enemy/states/EnemyDying.cs" id="12_dying_cs"]
 [ext_resource type="AudioStream" uid="uid://bhsnvg46wegfg" path="res://assets/sounds/effects/playerHit.wav" id="13_hit_snd"]
+[ext_resource type="Script" path="res://scripts/combat/Lootable2D.cs" id="14_loot_cs"]
+[ext_resource type="Script" path="res://scripts/combat/LootEntry.cs" id="15_loot_entry_cs"]
+[ext_resource type="PackedScene" uid="uid://bya065f3tc8mm" path="res://scenes/objects/ArrowCollectible.tscn" id="16_arrow_drop"]
+
+[sub_resource type="Resource" id="Resource_loot_arrows"]
+script = ExtResource("15_loot_entry_cs")
+CollectibleScene = ExtResource("16_arrow_drop")
+Weight = 10
+
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fly1"]
 atlas = ExtResource("1_bat_tex")
@@ -190,4 +199,11 @@ _sprite = NodePath("../../AnimatedSprite2D")
 _hurtbox = NodePath("../../Hurtbox")
 _contactHitbox = NodePath("../../ContactHitbox")
 _gravity = 400.0
+
+[node name="Lootable2D" type="Node2D" parent="." node_paths=PackedStringArray("DamageableNode")]
+script = ExtResource("14_loot_cs")
+DropTable = Array[ExtResource("15_loot_entry_cs")]([SubResource("Resource_loot_arrows")])
+EmptyDropWeight = 90
+DamageableNode = NodePath("../Damageable")
+
 

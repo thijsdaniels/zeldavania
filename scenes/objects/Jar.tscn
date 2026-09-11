@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://c7jarobject01"]
+
+[ext_resource type="Script" path="res://scripts/objects/Jar.cs" id="1_jar_cs"]
+[ext_resource type="Texture2D" path="res://assets/textures/objects/containers/Jar.png" id="2_jar_tex"]
+[ext_resource type="Script" path="res://scripts/combat/Damageable.cs" id="3_dmg_cs"]
+[ext_resource type="Script" path="res://scripts/combat/Hurtbox.cs" id="4_hrt_cs"]
+[ext_resource type="Script" path="res://scripts/combat/Lootable2D.cs" id="5_loot_cs"]
+[ext_resource type="Script" path="res://scripts/combat/LootEntry.cs" id="6_loot_entry_cs"]
+[ext_resource type="PackedScene" uid="uid://c54h8r3d0b2qx" path="res://scenes/objects/EnemyDeathEffect.tscn" id="7_death_puff"]
+[ext_resource type="PackedScene" uid="uid://bya065f3tc8mm" path="res://scenes/objects/ArrowCollectible.tscn" id="8_arrow10_drop"]
+[ext_resource type="PackedScene" uid="uid://cbarrow20collectible" path="res://scenes/objects/ArrowCollectible20.tscn" id="9_arrow20_drop"]
+[ext_resource type="PackedScene" uid="uid://cbarrow30collectible" path="res://scenes/objects/ArrowCollectible30.tscn" id="10_arrow30_drop"]
+[ext_resource type="PackedScene" uid="uid://cbpgyu4h2mhoa" path="res://scenes/objects/HeartCollectible.tscn" id="11_heart_drop"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jar_hurtbox"]
+size = Vector2(10, 12)
+
+[sub_resource type="Resource" id="Resource_loot_arrows_10"]
+script = ExtResource("6_loot_entry_cs")
+CollectibleScene = ExtResource("8_arrow10_drop")
+Weight = 35
+
+[sub_resource type="Resource" id="Resource_loot_arrows_20"]
+script = ExtResource("6_loot_entry_cs")
+CollectibleScene = ExtResource("9_arrow20_drop")
+Weight = 10
+
+[sub_resource type="Resource" id="Resource_loot_arrows_30"]
+script = ExtResource("6_loot_entry_cs")
+CollectibleScene = ExtResource("10_arrow30_drop")
+Weight = 5
+
+[sub_resource type="Resource" id="Resource_loot_heart"]
+script = ExtResource("6_loot_entry_cs")
+CollectibleScene = ExtResource("11_heart_drop")
+Weight = 40
+
+[node name="Jar" type="Node2D" node_paths=PackedStringArray("_damageable", "_hurtbox", "_lootable")]
+script = ExtResource("1_jar_cs")
+_damageable = NodePath("Damageable")
+_hurtbox = NodePath("Hurtbox")
+_lootable = NodePath("Lootable2D")
+_destructionEffectScene = ExtResource("7_death_puff")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = ExtResource("2_jar_tex")
+
+[node name="Damageable" type="Node" parent="."]
+script = ExtResource("3_dmg_cs")
+MaxHitPoints = 1
+CurrentHitPoints = 1
+
+[node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("_damageable")]
+collision_layer = 128
+collision_mask = 64
+script = ExtResource("4_hrt_cs")
+_damageable = NodePath("../Damageable")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_jar_hurtbox")
+
+[node name="Lootable2D" type="Node2D" parent="." node_paths=PackedStringArray("DamageableNode")]
+position = Vector2(0, -6)
+script = ExtResource("5_loot_cs")
+DropTable = Array[ExtResource("6_loot_entry_cs")]([SubResource("Resource_loot_arrows_10"), SubResource("Resource_loot_arrows_20"), SubResource("Resource_loot_arrows_30"), SubResource("Resource_loot_heart")])
+EmptyDropWeight = 10
+DamageableNode = NodePath("../Damageable")
